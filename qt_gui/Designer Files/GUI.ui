@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>pyfinder</class>
+ <widget class="QDialog" name="pyfinder">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>853</width>
-    <height>759</height>
+    <width>852</width>
+    <height>747</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="Q3Frame" name="frame">
+  <widget class="Q3Frame" name="main_frame">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -28,7 +28,7 @@
      <height>721</height>
     </rect>
    </property>
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="py_tabWidget">
     <property name="geometry">
      <rect>
       <x>12</x>
@@ -36,6 +36,9 @@
       <width>791</width>
       <height>691</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">&lt;image src=&quot;/home/iamrock/Desktop/apps.png&quot; /&gt;</string>
     </property>
     <property name="tabPosition">
      <enum>QTabWidget::South</enum>
@@ -58,7 +61,11 @@
     <property name="movable">
      <bool>false</bool>
     </property>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="app_tab">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>../../../../../../../../../home/iamrock/Desktop/apps.png</normaloff>../../../../../../../../../home/iamrock/Desktop/apps.png</iconset>
+     </attribute>
      <attribute name="title">
       <string>Apps</string>
      </attribute>
@@ -76,7 +83,7 @@
         <enum>QLayout::SetNoConstraint</enum>
        </property>
        <item>
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="app_textbox_search">
          <property name="minimumSize">
           <size>
            <width>505</width>
@@ -86,7 +93,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="app_button_search">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -94,7 +101,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QScrollArea" name="scrollArea">
+     <widget class="QScrollArea" name="scrollArea_display">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -106,7 +113,7 @@
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
+      <widget class="QWidget" name="app_display">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -130,11 +137,15 @@
      </widget>
      <zorder>horizontalLayoutWidget</zorder>
      <zorder>horizontalLayoutWidget</zorder>
-     <zorder>lineEdit</zorder>
-     <zorder>pushButton</zorder>
-     <zorder>scrollArea</zorder>
+     <zorder>app_textbox_search</zorder>
+     <zorder>app_button_search</zorder>
+     <zorder>scrollArea_display</zorder>
     </widget>
-    <widget class="QWidget" name="tab_files">
+    <widget class="QWidget" name="file_tab">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>../../../../../../../../../home/iamrock/Desktop/files.jpg</normaloff>../../../../../../../../../home/iamrock/Desktop/files.jpg</iconset>
+     </attribute>
      <attribute name="title">
       <string>Files</string>
      </attribute>
@@ -152,19 +163,29 @@
         <enum>QLayout::SetNoConstraint</enum>
        </property>
        <item>
-        <widget class="QLineEdit" name="lineEdit_7">
+        <widget class="QLineEdit" name="file_textbox_search">
          <property name="minimumSize">
           <size>
            <width>505</width>
-           <height>0</height>
+           <height>42</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_7">
+        <widget class="QPushButton" name="file_button_search">
          <property name="text">
-          <string>PushButton</string>
+          <string>  Search  </string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../../../../../../../../home/iamrock/Desktop/search.jpg</normaloff>../../../../../../../../../home/iamrock/Desktop/search.jpg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>42</width>
+           <height>42</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -182,7 +203,7 @@
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents_7">
+      <widget class="QWidget" name="file_display">
        <property name="geometry">
         <rect>
          <x>0</x>
