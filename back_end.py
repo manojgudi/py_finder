@@ -30,6 +30,7 @@ def app_search(keyword):
 		#save this into .recent_searches file
 		# We are saving output instead of keyword, since keyword==>result is many to one mapping 
 		recent_search_w(output)
+		output=str2list(output)
 		return output	
 		
 
