@@ -56,8 +56,26 @@ class front_end:
        		print self.keyword
 		
 		# Importing functions
-		from backend import app_search		
+		from back_end import app_search as app_search
+		self.output=app_search(self.keyword)		
 
+		# Displaying static text on label
+		self.apps_display_result = self.glade.get_object("apps_display_result")
+		if (self.output==0):
+			# Error condition
+			self.apps_display_result.set_text("cannot search blank keyword")
+			self.apps_searchbox.set_text("")
+		elif (self.output==1):
+			# Error condition
+			self.apps_display_result.set_text("no such application found")
+			self.apps_searchbox.set_text("")
+
+		else:
+			# display result on app
+			self.apps_display_result.set_text(self.output)
+			self.apps_searchbox.set_text("")
+
+	
 	
 
 if __name__=="__main__" :
