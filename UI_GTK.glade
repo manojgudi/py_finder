@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface>
-  <requires lib="gtk+" version="2.24"/>
+<glade-interface>
+  <!-- interface-requires gtk+ 2.24 -->
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkWindow" id="window1">
+  <widget class="GtkWindow" id="window1">
     <property name="width_request">350</property>
     <property name="height_request">500</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkNotebook" id="notebook1">
+      <widget class="GtkNotebook" id="notebook1">
         <property name="visible">True</property>
         <property name="app_paintable">True</property>
         <property name="can_focus">True</property>
@@ -16,21 +16,21 @@
         <property name="tab_hborder">15</property>
         <property name="tab_vborder">15</property>
         <child>
-          <object class="GtkFrame" id="apps_frame">
+          <widget class="GtkFrame" id="apps_frame">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label_xalign">0</property>
             <property name="shadow_type">none</property>
             <child>
-              <object class="GtkVPaned" id="vpaned1">
+              <widget class="GtkVPaned" id="vpaned1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <child>
-                  <object class="GtkHPaned" id="hpaned1">
+                  <widget class="GtkHPaned" id="hpaned1">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <child>
-                      <object class="GtkEntry" id="apps_searchbox">
+                      <widget class="GtkEntry" id="apps_searchbox">
                         <property name="width_request">200</property>
                         <property name="height_request">40</property>
                         <property name="visible">True</property>
@@ -44,26 +44,26 @@
                         <property name="secondary_icon_sensitive">True</property>
                         <property name="primary_icon_tooltip_text" translatable="yes">Search Applications</property>
                         <property name="primary_icon_tooltip_markup" translatable="yes">Search Applications</property>
-                      </object>
+                      </widget>
                       <packing>
                         <property name="resize">False</property>
                         <property name="shrink">True</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="apps_searchbtn">
+                      <widget class="GtkButton" id="apps_searchbtn">
                         <property name="label" translatable="yes">Search</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
-                      </object>
+                      </widget>
                       <packing>
                         <property name="resize">False</property>
                         <property name="shrink">True</property>
                       </packing>
                     </child>
-                  </object>
+                  </widget>
                   <packing>
                     <property name="resize">False</property>
                     <property name="shrink">True</property>
@@ -72,10 +72,10 @@
                 <child>
                   <placeholder/>
                 </child>
-              </object>
+              </widget>
             </child>
-            <child type="label">
-              <object class="GtkLabel" id="apps_frame_title">
+            <child>
+              <widget class="GtkLabel" id="apps_frame_title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="xpad">311</property>
@@ -83,36 +83,40 @@
                 <property name="label" translatable="yes">Applications</property>
                 <property name="justify">center</property>
                 <property name="width_chars">11</property>
-              </object>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
             </child>
-          </object>
+          </widget>
         </child>
-        <child type="tab">
-          <object class="GtkLabel" id="tabs_apps">
+        <child>
+          <widget class="GtkLabel" id="tabs_apps">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Apps</property>
-          </object>
+          </widget>
           <packing>
             <property name="tab_fill">False</property>
+            <property name="type">tab</property>
           </packing>
         </child>
         <child>
-          <object class="GtkFrame" id="files_frame">
+          <widget class="GtkFrame" id="files_frame">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label_xalign">0</property>
             <property name="shadow_type">none</property>
             <child>
-              <object class="GtkVPaned" id="vpaned2">
+              <widget class="GtkVPaned" id="vpaned2">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <child>
-                  <object class="GtkHPaned" id="hpaned2">
+                  <widget class="GtkHPaned" id="hpaned2">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <child>
-                      <object class="GtkEntry" id="files_searchbox">
+                      <widget class="GtkEntry" id="files_searchbox">
                         <property name="width_request">200</property>
                         <property name="height_request">40</property>
                         <property name="visible">True</property>
@@ -126,14 +130,14 @@
                         <property name="secondary_icon_sensitive">True</property>
                         <property name="primary_icon_tooltip_text" translatable="yes">Search Applications</property>
                         <property name="primary_icon_tooltip_markup" translatable="yes">Search Applications</property>
-                      </object>
+                      </widget>
                       <packing>
                         <property name="resize">False</property>
                         <property name="shrink">True</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="apps_searchbtn1">
+                      <widget class="GtkButton" id="apps_searchbtn1">
                         <property name="label">gtk-find</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -141,13 +145,13 @@
                         <property name="border_width">4</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_stock">True</property>
-                      </object>
+                      </widget>
                       <packing>
                         <property name="resize">False</property>
                         <property name="shrink">True</property>
                       </packing>
                     </child>
-                  </object>
+                  </widget>
                   <packing>
                     <property name="resize">False</property>
                     <property name="shrink">True</property>
@@ -156,35 +160,39 @@
                 <child>
                   <placeholder/>
                 </child>
-              </object>
+              </widget>
             </child>
-            <child type="label">
-              <object class="GtkLabel" id="files_frame_title">
+            <child>
+              <widget class="GtkLabel" id="files_frame_title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="xpad">311</property>
                 <property name="ypad">10</property>
                 <property name="label" translatable="yes">Files</property>
                 <property name="justify">center</property>
-              </object>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
             </child>
-          </object>
+          </widget>
           <packing>
             <property name="position">1</property>
           </packing>
         </child>
-        <child type="tab">
-          <object class="GtkLabel" id="tabs_files">
+        <child>
+          <widget class="GtkLabel" id="tabs_files">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Files</property>
-          </object>
+          </widget>
           <packing>
             <property name="position">1</property>
             <property name="tab_fill">False</property>
+            <property name="type">tab</property>
           </packing>
         </child>
-      </object>
+      </widget>
     </child>
-  </object>
-</interface>
+  </widget>
+</glade-interface>
