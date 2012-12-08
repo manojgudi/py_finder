@@ -1,6 +1,5 @@
-dev branch for testing of py_finder gtk
+py_finder gtk 
 
-this branch is developed by Dguitarbite a.k.a pranav
+feature for searching applications
 
-Milestone: Make a basic working app in PY_GTK
-Task: For this milestone I have to create a searching and displaying for the files tab.
+dev branch
