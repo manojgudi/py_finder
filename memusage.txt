@@ -1,0 +1,3 @@
+with florence keyboard, RAM usage is around 15mb
+without florence keyboard, RAM usage is around 8 mb
+its definitely lighter considering libqt app took 16mb just to load
