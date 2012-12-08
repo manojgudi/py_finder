@@ -3,6 +3,7 @@
 import sys
 import subprocess as sp
 
+
 try:
 	import pygtk
 	pygtk.require("2.0")
@@ -31,7 +32,7 @@ class front_end:
         	self.window=self.glade.get_object("window1")
                 self.window.show_all()
                 self.open_kybd()
-                self.dic = {"on_apps_searchbox_insert_at_cursor" : self.on_apps_searchbox_activate, "on_MainWindow_destroy" : gtk.main_quit }
+                self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "on_window1_destroy_event" : gtk.main_quit }
                 self.glade.connect_signals(self.dic)
 
 
@@ -44,12 +45,18 @@ class front_end:
                         
                 
 	def main(self):		
+	# Insert any code just before apps goes into gtk.main()
 		print 'hello dick'
 
         
         def on_apps_searchbox_activate(self,widget):
        		print "its working biatch"
+       		self.apps_searchbox=self.glade.get_object("apps_searchbox")
+       		self.keyword=self.apps_searchbox.get_text()
+       		print self.keyword
 		
+		# Importing functions
+		from backend import app_search		
 
 	
 
