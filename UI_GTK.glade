@@ -2,10 +2,19 @@
 <interface>
   <requires lib="gtk+" version="2.24"/>
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkImage" id="image1">
+  <object class="GtkImage" id="apps_search">
+    <property name="width_request">47</property>
+    <property name="height_request">30</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
+    <property name="pixbuf">graphics/search_button.png</property>
+  </object>
+  <object class="GtkImage" id="file_search">
+    <property name="width_request">47</property>
+    <property name="height_request">30</property>
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">graphics/search_button.png</property>
   </object>
   <object class="GtkWindow" id="window1">
     <property name="width_request">350</property>
@@ -32,6 +41,7 @@
               <object class="GtkVPaned" id="vpaned1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="position_set">True</property>
                 <child>
                   <object class="GtkHPaned" id="hpaned1">
                     <property name="visible">True</property>
@@ -42,7 +52,9 @@
                         <property name="height_request">40</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="max_length">30</property>
                         <property name="invisible_char">•</property>
+                        <property name="width_chars">30</property>
                         <property name="invisible_char_set">True</property>
                         <property name="primary_icon_stock">gtk-edit</property>
                         <property name="primary_icon_activatable">True</property>
@@ -63,12 +75,14 @@
                         <property name="label" translatable="yes">
 
 </property>
+                        <property name="width_request">38</property>
+                        <property name="height_request">30</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="resize_mode">immediate</property>
                         <property name="use_action_appearance">False</property>
-                        <property name="image">image1</property>
+                        <property name="image">apps_search</property>
+                        <property name="image_position">top</property>
                       </object>
                       <packing>
                         <property name="resize">False</property>
@@ -78,7 +92,7 @@
                   </object>
                   <packing>
                     <property name="resize">False</property>
-                    <property name="shrink">True</property>
+                    <property name="shrink">False</property>
                   </packing>
                 </child>
                 <child>
@@ -140,9 +154,11 @@
                         <property name="height_request">40</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="max_length">30</property>
                         <property name="invisible_char">•</property>
+                        <property name="width_chars">30</property>
                         <property name="invisible_char_set">True</property>
-                        <property name="primary_icon_stock">gtk-find</property>
+                        <property name="primary_icon_stock">gtk-edit</property>
                         <property name="primary_icon_activatable">True</property>
                         <property name="secondary_icon_activatable">False</property>
                         <property name="primary_icon_sensitive">True</property>
@@ -152,22 +168,25 @@
                       </object>
                       <packing>
                         <property name="resize">False</property>
-                        <property name="shrink">True</property>
+                        <property name="shrink">False</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="apps_searchbtn1">
-                        <property name="label">gtk-find</property>
+                      <object class="GtkButton" id="files_searchbtn">
+                        <property name="label">
+
+</property>
+                        <property name="width_request">38</property>
+                        <property name="height_request">30</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="border_width">4</property>
                         <property name="use_action_appearance">False</property>
-                        <property name="use_stock">True</property>
+                        <property name="image">file_search</property>
                       </object>
                       <packing>
                         <property name="resize">False</property>
-                        <property name="shrink">True</property>
+                        <property name="shrink">False</property>
                       </packing>
                     </child>
                   </object>
