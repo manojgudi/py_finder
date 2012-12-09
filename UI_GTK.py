@@ -18,7 +18,6 @@ except:
 	print "check gtk deps"
 	sys.exit()
 
-
 class front_end:
 	""" This is front handler for appsearch feature"""
 	def __init__(self):
@@ -33,9 +32,7 @@ class front_end:
 		self.open_kybd()
 		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "on_window1_destroy_event" : gtk.main_quit }
 		self.glade.connect_signals(self.dic)
-				
-
-
+		
         def open_kybd(self):
                 try:
                         sp.Popen("florence")
@@ -43,7 +40,7 @@ class front_end:
                 except:
                         print "florence not found"
 
-	def gtk_main_quit(self):
+	def gtk_main_quit(self,widget):
 		"""
 			Predefined callback.
 			Equivalent to self.quit()
@@ -55,7 +52,9 @@ class front_end:
 	# Insert any code just before apps goes into gtk.main()
 		print 'manoj is a dick'
 
-        
+        def gtk_main_quit(self):
+			print "this quit works!!!"
+			self.quit()
         def on_apps_searchbox_activate(self,widget):
        		print "its working biatch"
        		self.apps_searchbox=self.glade.get_object("apps_searchbox")
@@ -82,8 +81,6 @@ class front_end:
 			self.apps_display_result.set_text(self.output)
 			self.apps_searchbox.set_text("")
 
-	
-	
 
 if __name__=="__main__" :
 	front_obj=front_end()
