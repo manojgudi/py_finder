@@ -1,7 +1,7 @@
 import subprocess as sp
 
 def app_search(keyword):
-	
+	""" This function is used to query dpkg and return single relevant answer; In: single string, Out: Error Number or string of relevant search """
 	# Check for blank keywords
 	if keyword=="":
 		print "blank keyword"
@@ -20,22 +20,23 @@ def app_search(keyword):
 	p2.kill()
 
 	if output=="":
-		print "No application by such name"
-	
+		#print "No application by such name"
 		# error code 1
 		return 1
 	else:
-		print output
+		#print output
 
 		#save this into .recent_searches file
 		# We are saving output instead of keyword, since keyword==>result is many to one mapping 
-		recent_search_w(output)
+		#recent_search_w(output)
 		return output	
 		
 
 
 # On Double clicking app from search, this should be called:
 def open_app(program_name):
+	
+	''' Function used to open app when tapping of relevant keyword; In: single string, Out: Success Number '''
 	
 	# Additional functionality reserved for future for program whose installation package name different than execution name
 	# for i in special_program_name:
@@ -48,7 +49,7 @@ def open_app(program_name):
 	return 100
 
 def search_file(keyword):
-	
+	'''Search function used to locate single file, In: String keyword, Out: list of all relevant path of keyword'''	
 	if keyword=="":
 		print "keyword cannot be null"
 		#error code 2
@@ -67,7 +68,7 @@ def search_file(keyword):
 
 # path_full = one element from output of search_file
 def open_path(path_full):
-	
+	""" Tapping relevant search result invokes file explorer to open folder containing relevant file, In: Single string of full_path Out: Error/Success number """
 	try:
 		# remove file_name
 		path=(str(path_full.rpartition("/")[0]))
@@ -84,6 +85,7 @@ def open_path(path_full):
 
 # Called when 
 def recent_search_r():
+	""" Reading the .recent_searches file In: None, Out: List of all values present in .recent_searches file"""
 	try:
 		file_obj=open(".recent_searches","r")
 	except IOError:
@@ -98,7 +100,7 @@ def recent_search_r():
 	
 
 def recent_search_w(result):
-	
+	""" Called by other functions to write a successful result to .recent_searches.file; In: Successful String Result from app_search(); Out: None  """
 	file_read=recent_search_r()
 
 	def write(result):
@@ -119,7 +121,7 @@ def recent_search_w(result):
 		else:
 			write(result)
 	
-	#checking for 11th term and deleting it
+	#checking for 11th term and deleting it; so that .recent_searches contain only last 10 results
 	#content=recent_search_r()
 	#if len(content)>11:
 	#	content.pop(len(content)-1)
@@ -130,6 +132,7 @@ def recent_search_w(result):
 	
 # Formatted String to list
 def str2list(str_var):
+	""" Function to convert long formatted string of delimited (/n) to a list; In: Long Formatted List Out: List of elements """
 	number_lines=str_var.count("\n")
 	list_var=[None]*(number_lines)
 	temp2=str_var
@@ -139,14 +142,4 @@ def str2list(str_var):
 		temp2=str(temp2.partition("\n")[2])
 	return list_var				
 
-
-# For testing purposes
-def main():
-	var=raw_input("Enter package name: ")
-	app_search(var)
-	#search_file(var)
-	#open_path(var)
-	#recent_search_r()
-
-main()
 
