@@ -2,10 +2,16 @@
 <interface>
   <requires lib="gtk+" version="2.24"/>
   <!-- interface-naming-policy project-wide -->
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-missing-image</property>
+  </object>
   <object class="GtkWindow" id="window1">
     <property name="width_request">350</property>
     <property name="height_request">500</property>
     <property name="can_focus">False</property>
+    <property name="resizable">False</property>
     <signal name="destroy-event" handler="gtk_main_quit" swapped="no"/>
     <child>
       <object class="GtkNotebook" id="notebook1">
@@ -38,7 +44,7 @@
                         <property name="can_focus">True</property>
                         <property name="invisible_char">•</property>
                         <property name="invisible_char_set">True</property>
-                        <property name="primary_icon_stock">gtk-find</property>
+                        <property name="primary_icon_stock">gtk-edit</property>
                         <property name="primary_icon_activatable">True</property>
                         <property name="secondary_icon_activatable">False</property>
                         <property name="primary_icon_sensitive">True</property>
@@ -49,20 +55,24 @@
                       </object>
                       <packing>
                         <property name="resize">False</property>
-                        <property name="shrink">True</property>
+                        <property name="shrink">False</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkButton" id="apps_searchbtn">
-                        <property name="label" translatable="yes">Search</property>
+                        <property name="label" translatable="yes">
+
+</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="resize_mode">immediate</property>
                         <property name="use_action_appearance">False</property>
+                        <property name="image">image1</property>
                       </object>
                       <packing>
                         <property name="resize">False</property>
-                        <property name="shrink">True</property>
+                        <property name="shrink">False</property>
                       </packing>
                     </child>
                   </object>
@@ -89,11 +99,13 @@
               <object class="GtkLabel" id="apps_frame_title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xpad">311</property>
-                <property name="ypad">10</property>
-                <property name="label" translatable="yes">Applications</property>
-                <property name="justify">center</property>
+                <property name="xpad">148</property>
+                <property name="ypad">12</property>
+                <property name="label" translatable="yes">Apps</property>
+                <property name="ellipsize">start</property>
                 <property name="width_chars">11</property>
+                <property name="single_line_mode">True</property>
+                <property name="max_width_chars">30</property>
               </object>
             </child>
           </object>
@@ -165,7 +177,15 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel" id="file_display_result">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">label</property>
+                  </object>
+                  <packing>
+                    <property name="resize">True</property>
+                    <property name="shrink">True</property>
+                  </packing>
                 </child>
               </object>
             </child>
@@ -173,10 +193,9 @@
               <object class="GtkLabel" id="files_frame_title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xpad">311</property>
-                <property name="ypad">10</property>
+                <property name="xpad">148</property>
+                <property name="ypad">12</property>
                 <property name="label" translatable="yes">Files</property>
-                <property name="justify">center</property>
               </object>
             </child>
           </object>
