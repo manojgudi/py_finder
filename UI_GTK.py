@@ -31,7 +31,7 @@ class front_end:
 		self.window.show_all()
 		self.window.connect("destroy",self.gtk_main_quit)
 		self.open_kybd()
-		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "destroy" : self.gtk_main_quit }
+		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "destroy" : self.gtk_main_quit, "on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked }
 		self.glade.connect_signals(self.dic)
 		
         def open_kybd(self):
@@ -68,20 +68,46 @@ class front_end:
 
 		# Displaying static text on label
 		self.apps_display_result = self.glade.get_object("apps_display_result")
+	
+		# get application launch button object
+       		self.apps_launch_button=self.glade.get_object("apps_launch_button")
+
 		if (self.output==0):
 			# Error condition
 			self.apps_display_result.set_text("cannot search blank keyword")
 			self.apps_searchbox.set_text("")
+
+			# hide launch button
+	       		self.apps_launch_button.hide()
+
 		elif (self.output==1):
 			# Error condition
 			self.apps_display_result.set_text("no such application found")
 			self.apps_searchbox.set_text("")
 
+			# hide launch button
+	       		self.apps_launch_button.hide()
+
+
 		else:
 			# display result on app
-			self.apps_display_result.set_text(self.output)
+			self.apps_display_result.set_text(self.output)	
 			self.apps_searchbox.set_text("")
+			
+			#get launch button icon
+	       		self.apps_launch_button.show()
 
+	def on_apps_launch_button_clicked(self, widget):
+		from back_end import open_app as open_app
+		try:
+			self.did_app_open=open_app(str(self.output))
+			print self.did_app_open
+		except:
+			print "app not found"
+			print self.output
+			print list(self.output)
+			
+						
 
 if __name__=="__main__" :
 	front_obj=front_end()

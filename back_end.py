@@ -29,6 +29,10 @@ def app_search(keyword):
 		#save this into .recent_searches file
 		# We are saving output instead of keyword, since keyword==>result is many to one mapping 
 		#recent_search_w(output)
+
+		# problem is output from app_search is list with a delimiter \n; so 'app_name' becomes 'app_name\n', hence we use below function that removes delimiter
+		delim_number=output.find("\n")
+		output=output[:delim_number]
 		return output	
 		
 
@@ -42,9 +46,10 @@ def open_app(program_name):
 	# for i in special_program_name:
 		#if program_name==i:
 			#program_name=y #(mapped from special_program_name list)
-
-	sp.Popen([program_name])
 	
+	
+	sp.Popen([str(program_name)])
+		
 	# success code 100
 	return 100
 
