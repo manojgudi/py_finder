@@ -31,7 +31,7 @@ class front_end:
 		self.window.show_all()
 		self.window.connect("destroy",self.gtk_main_quit)
 		self.open_kybd()
-		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "destroy" : self.gtk_main_quit, "on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked }
+		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "destroy" : self.gtk_main_quit, "on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, "on_apps_search_button_clicked" : self.on_apps_searchbox_activate}
 		self.glade.connect_signals(self.dic)
 		
         def open_kybd(self):
