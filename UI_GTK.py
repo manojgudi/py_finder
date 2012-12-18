@@ -31,7 +31,16 @@ class front_end:
 		self.window.show_all()
 		self.window.connect("destroy",self.gtk_main_quit)
 		self.open_kybd()
-		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "destroy" : self.gtk_main_quit, "on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, "on_apps_search_button_clicked" : self.on_apps_searchbox_activate}
+		
+		## dic start
+		self.dic = {
+		"on_apps_searchbox_activate" : self.on_apps_searchbox_activate,
+		"destroy" : self.gtk_main_quit, 
+		"on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, 
+		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate
+		}
+		## End of dic
+		
 		self.glade.connect_signals(self.dic)
 		
         def open_kybd(self):
@@ -96,6 +105,45 @@ class front_end:
 			
 			#get launch button icon
 	       		self.apps_launch_button.show()
+	       		
+	       		# experimental code for tree
+	       		
+	       		# Treestore
+	       		self.treestore = gtk.TreeStore(str)
+			
+			for parent in range(4):
+				piter=self.treestore.append(None, ['parent %i' % parent])
+				for child in range(3):
+					self.treestore.append(piter, ['child %i of parent %i' % (child,parent)])
+			       		
+			# TreeView
+			self.treeview = gtk.TreeView(self.treestore)
+			
+			# Create Treeview column
+			self.tvcolumn = gtk.TreeViewColumn('Column 0')
+			
+			#add tvcolumn to treeview
+			self.treeview.append_column(self.tvcolumn)
+			
+			# Create a CellRendererText to render data
+			self.cell = gtk.CellRendererText()
+			
+			# Add the cell to tvcolumn and allow it to expand
+			self.tvcolumn.pack_start(self.cell, True)
+			
+			# Set the cell to text attribute to column 0
+			self.tvcolumn.add_attribute(self.cell, 'text', 0)
+			
+			print "duck duck, gtk tree created!"
+			
+			# adding it to frame
+			self.file_search_frame = self.glade.get_object("file_search_frame")
+			self.file_search_frame.add(self.treeview)
+			self.file_search_frame.show_all()			 
+						
+						
+ 		
+			
 
 	def on_apps_launch_button_clicked(self, widget):
 		from back_end import open_app as open_app
