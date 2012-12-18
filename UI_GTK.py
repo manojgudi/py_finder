@@ -37,7 +37,9 @@ class front_end:
 		"on_apps_searchbox_activate" : self.on_apps_searchbox_activate,
 		"destroy" : self.gtk_main_quit, 
 		"on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, 
-		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate
+		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate,
+		"on_file_searchbox_activate" : self.on_file_searchbox_activate
+		
 		}
 		## End of dic
 		
@@ -66,7 +68,7 @@ class front_end:
 
 
         def on_apps_searchbox_activate(self,widget):
-       		print "its working biatch"
+       		print "apps_searchbox working"
        		self.apps_searchbox=self.glade.get_object("apps_searchbox")
        		self.keyword=self.apps_searchbox.get_text()
        		print self.keyword
@@ -97,7 +99,6 @@ class front_end:
 			# hide launch button
 	       		self.apps_launch_button.hide()
 
-
 		else:
 			# display result on app
 			self.apps_display_result.set_text(self.output)	
@@ -105,22 +106,62 @@ class front_end:
 			
 			#get launch button icon
 	       		self.apps_launch_button.show()
-	       		
-	       		# experimental code for tree
+      									
+						
+ 	def ErrorMessage(self, message, searchbox):
+ 		md = gtk.MessageDialog(self.window,
+ 					gtk.DIALOG_DESTROY_WITH_PARENT,
+ 					gtk.MESSAGE_WARNING,
+ 					gtk.BUTTONS_CLOSE,
+ 					message)
+ 		md.run()
+ 		md.destroy()
+ 		
+ 		# Remove text from file_searchbox
+ 		searchbox.set_text("")
+ 		
+ 		
+	def on_file_searchbox_activate(self, widget):
+		
+		self.file_searchbox = self.glade.get_object("file_searchbox")
+		
+		# getting keyword
+		self.keyword_file = self.file_searchbox.get_text()
+		print self.keyword_file
+				
+		# Importing function
+		from back_end import search_file as search_file
+		
+		self.output_list = search_file(self.keyword_file)
+
+		# get file_search_frame from glade
+		self.file_search_frame = self.glade.get_object("file_search_frame")
+				
+		if (self.output_list == None):
+			# If no such file found, then warn
+			self.message="No File or Folder found by that name"
+			self.ErrorMessage(self.message,self.file_searchbox)
+											
+		elif (self.output_list == 2):
+			# Blank Keyword Error
+			self.message="Blank Keyword!"
+			self.ErrorMessage(self.message,self.file_searchbox)
+		else:
+			print self.output_list
+
+			#### THE TREE CODE ####
 	       		
 	       		# Treestore
 	       		self.treestore = gtk.TreeStore(str)
 			
-			for parent in range(4):
-				piter=self.treestore.append(None, ['parent %i' % parent])
-				for child in range(3):
-					self.treestore.append(piter, ['child %i of parent %i' % (child,parent)])
+			for parent in self.output_list:
+				piter=self.treestore.append(None, [parent])
 			       		
 			# TreeView
 			self.treeview = gtk.TreeView(self.treestore)
-			
+			self.treeview.connect('cursor-changed', self.get_selected_path)
 			# Create Treeview column
-			self.tvcolumn = gtk.TreeViewColumn('Column 0')
+			self.tvcolumn = gtk.TreeViewColumn('File List')
 			
 			#add tvcolumn to treeview
 			self.treeview.append_column(self.tvcolumn)
@@ -139,12 +180,25 @@ class front_end:
 			# adding it to frame
 			self.file_search_frame = self.glade.get_object("file_search_frame")
 			self.file_search_frame.add(self.treeview)
-			self.file_search_frame.show_all()			 
-						
-						
- 		
+			self.file_search_frame.show_all()
 			
+			
+	###
+	def get_selected_path(self, widget, data=None):
+		
+		self.manoj=self.treeview.get_selection()
+		self.manoj.set_mode(gtk.SELECTION_SINGLE)
+		self.var1,self.var2=self.manoj.get_selected()
+		self.result=self.var1.get_value(self.var2,0)
+		
+		self.on_folder_launch_button(self.result)
 
+
+	def on_folder_launch_button(self, path):
+		from back_end import open_path as open_path
+		open_path(path)
+		
+	
 	def on_apps_launch_button_clicked(self, widget):
 		from back_end import open_app as open_app
 		try:

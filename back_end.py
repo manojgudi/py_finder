@@ -56,7 +56,7 @@ def open_app(program_name):
 def search_file(keyword):
 	'''Search function used to locate single file, In: String keyword, Out: list of all relevant path of keyword'''	
 	if keyword=="":
-		print "keyword cannot be null"
+		print "keyword cannot be null/blank"
 		#error code 2
 		return 2
 	else:
@@ -64,10 +64,9 @@ def search_file(keyword):
 		result=p1.communicate()[0]
 
 		if result=="":
-			print "no file found"
+			print "no such file found"
 		else:
 			output=str2list(result)
-			print output
 			#open_path(output[3])
 			return output
 
@@ -79,7 +78,7 @@ def open_path(path_full):
 		path=(str(path_full.rpartition("/")[0]))
 		
 		### REPLACE thunar with pcmanfm for lxde
-		p1=sp.Popen(["thunar", path])
+		p1=sp.Popen(["pcmanfm", path])
 		
 		# success code 101
 		return 101
