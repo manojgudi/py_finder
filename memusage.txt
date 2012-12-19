@@ -9,3 +9,9 @@ memusage
 	without florence ~ 8
 	flushes mem on closing: yes
 	
+#v0.2
+memusage 
+	with florence ~ 13-14mb
+	without florence ~ 8
+	flushes mem on closing: yes
+	
