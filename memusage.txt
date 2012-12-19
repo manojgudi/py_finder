@@ -15,3 +15,5 @@ memusage
 	without florence ~ 8
 	flushes mem on closing: yes
 	
+#v0.3
+same as v0.2
