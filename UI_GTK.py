@@ -38,8 +38,8 @@ class front_end:
 		"destroy" : self.gtk_main_quit, 
 		"on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, 
 		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate,
-		"on_file_searchbox_activate" : self.on_file_searchbox_activate
-		
+		"on_file_searchbox_activate" : self.on_file_searchbox_activate,
+		"on_file_search_button_clicked" : self.on_file_searchbox_activate
 		}
 		## End of dic
 		
@@ -50,7 +50,13 @@ class front_end:
                         sp.Popen("florence")
                         print "started florence onscreen keyboard"
                 except:
-                        print "florence not found"
+                	print "florence not found"
+                	
+                	# Try for onboard if florence is not found
+                	try: 
+                		sp.Popen("onboard")
+                	except:
+                		print "onboard not found"
 
 	def gtk_main_quit(self,widget):
 		"""
@@ -58,13 +64,20 @@ class front_end:
 			Equivalent to self.quit()
 			I want my ram free of any infections after fucking with GTK....;)
 		"""                    
-		sp.Popen(["echo", "Killing florence"])
-		sp.Popen(["pkill", "florence"])			
+		try:
+			print "Killing florence"
+			sp.Popen(["pkill", "florence"])
+		except:
+			try: 
+				print "Killing onboard"
+				sp.Popen("pkill", "onboard")
+			except:
+				print "cannot kill virtual keyboard instance since no such app started"			
 		gtk.main_quit()
                 
 	def main(self):		
 	# Insert any code just before apps goes into gtk.main()
-		print 'manoj is a dick'
+		print 'main()'
 
 
         def on_apps_searchbox_activate(self,widget):
@@ -150,7 +163,14 @@ class front_end:
 			print self.output_list
 
 			#### THE TREE CODE ####
-	       		
+			
+			#Clear existing widget from file_search_frame
+			try:
+				self.file_search_frame.remove(self.treeview)
+			except:
+				# Do nothing if found error => there is no widget in frame
+				pass
+				       		
 	       		# Treestore
 	       		self.treestore = gtk.TreeStore(str)
 			
@@ -160,9 +180,10 @@ class front_end:
 			# TreeView
 			self.treeview = gtk.TreeView(self.treestore)
 			self.treeview.connect('cursor-changed', self.get_selected_path)
+		
 			# Create Treeview column
 			self.tvcolumn = gtk.TreeViewColumn('File List')
-			
+
 			#add tvcolumn to treeview
 			self.treeview.append_column(self.tvcolumn)
 			
@@ -175,7 +196,7 @@ class front_end:
 			# Set the cell to text attribute to column 0
 			self.tvcolumn.add_attribute(self.cell, 'text', 0)
 			
-			print "duck duck, gtk tree created!"
+			print "gtk tree created!"
 			
 			# adding it to frame
 			self.file_search_frame = self.glade.get_object("file_search_frame")
@@ -183,18 +204,21 @@ class front_end:
 			self.file_search_frame.show_all()
 			
 			
-	###
 	def get_selected_path(self, widget, data=None):
+		## To get selected path from gtk widget, note that we use a connector above displaying treeview
 		
-		self.manoj=self.treeview.get_selection()
-		self.manoj.set_mode(gtk.SELECTION_SINGLE)
-		self.var1,self.var2=self.manoj.get_selected()
+		self.treeview_instance=self.treeview.get_selection()
+		self.treeview_instance.set_mode(gtk.SELECTION_SINGLE)
+		
+		# get_selected returns 2 variables in tuples
+		self.var1,self.var2=self.treeview_instance.get_selected()
 		self.result=self.var1.get_value(self.var2,0)
 		
-		self.on_folder_launch_button(self.result)
+		# When clicked, launch this function
+		self.on_folder_launch(self.result)
 
 
-	def on_folder_launch_button(self, path):
+	def on_folder_launch(self, path):
 		from back_end import open_path as open_path
 		open_path(path)
 		
