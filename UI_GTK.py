@@ -90,35 +90,81 @@ class front_end:
 		from back_end import app_search as app_search
 		self.output=app_search(self.keyword)		
 
-		# Displaying static text on label
-		self.apps_display_result = self.glade.get_object("apps_display_result")
-	
-		# get application launch button object
-       		self.apps_launch_button=self.glade.get_object("apps_launch_button")
-
+		### Button
+		# Create new button
+		
+		# Get frame
+		self.apps_result_frame = self.glade.get_object("apps_result_frame")				
+		
+		
 		if (self.output==0):
 			# Error condition
-			self.apps_display_result.set_text("cannot search blank keyword")
-			self.apps_searchbox.set_text("")
-
-			# hide launch button
-	       		self.apps_launch_button.hide()
+			message="blank keyword!"
+			self.ErrorMessage(message, self.apps_searchbox)
+			
 
 		elif (self.output==1):
 			# Error condition
-			self.apps_display_result.set_text("no such application found")
-			self.apps_searchbox.set_text("")
+			message="No such application found"
+			self.ErrorMessage(message, self.apps_searchbox)
 
-			# hide launch button
-	       		self.apps_launch_button.hide()
-
-		else:
-			# display result on app
-			self.apps_display_result.set_text(self.output)	
-			self.apps_searchbox.set_text("")
+		else:   
+			### Application Found:
 			
-			#get launch button icon
-	       		self.apps_launch_button.show()
+			# If Frame already contains iconview, then remove it
+			try:
+				self.apps_result_frame.remove(self.apps_search_iconview)
+			except: pass
+							
+			# make new liststore
+			self.apps_search_liststore = gtk.ListStore(str, gtk.gdk.Pixbuf)
+			
+			# Find icon 
+			self.icon="/usr/share/icons/hicolor/48x48/apps/"+self.output+".png"
+			self.default_icon="graphics/default_apps.png"
+			
+			# Set pixbuf
+			try:
+				self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.icon)
+			except:
+				# If icon not found, then use defaults
+				self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.default_icon)
+			
+			# Append to model
+			self.apps_search_liststore.append([self.output,self.apps_search_pixbuf])
+			
+			# Make icon view
+			self.apps_search_iconview = gtk.IconView(self.apps_search_liststore)
+			
+			# Icon view settings
+			self.apps_search_iconview.set_text_column(0)
+			self.apps_search_iconview.set_pixbuf_column(1)
+			self.apps_search_iconview.set_orientation(gtk.ORIENTATION_VERTICAL)
+			self.apps_search_iconview.set_selection_mode(gtk.SELECTION_SINGLE)
+			
+			# connecter, when selection changed, call on_activate, and pass it apps_searchbox
+			self.apps_search_iconview.connect('selection_changed', self.on_activate, self.apps_searchbox)
+			
+			# iconview set columns
+			self.apps_search_iconview.set_columns(1)
+			
+			# Add iconview to frame	
+			self.apps_result_frame.add(self.apps_search_iconview)
+			print "added iconview to frame"
+			self.apps_result_frame.show_all()
+			
+						
+	
+	def on_activate(self, widget, searchbox):
+
+		print "item selected "
+		# Clear searchbox
+		searchbox.set_text("")
+		
+		#open app
+		from back_end import open_app as open_app
+		open_app(self.output)
+		
       									
 						
  	def ErrorMessage(self, message, searchbox):
