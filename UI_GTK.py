@@ -35,7 +35,7 @@ class front_end:
 		## dic start
 		self.dic = {
 		"on_apps_searchbox_activate" : self.on_apps_searchbox_activate,
-		"destroy" : self.gtk_main_quit, 
+		"gtk_main_quit" : gtk.main_quit, 
 		"on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, 
 		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate,
 		"on_file_searchbox_activate" : self.on_file_searchbox_activate,
