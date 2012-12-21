@@ -31,9 +31,7 @@ class front_end:
 		self.window.show_all()
 		self.window.connect("destroy",gtk.main_quit)
 		self.open_kybd()
-<<<<<<< HEAD
 		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "gtk_main_quit" : gtk.main_quit }
-=======
 		
 		## dic start
 		self.dic = {
@@ -45,8 +43,6 @@ class front_end:
 		"on_file_search_button_clicked" : self.on_file_searchbox_activate
 		}
 		## End of dic
-		
->>>>>>> 8d34a34283ed6884c46ee96573e09c28264cdbca
 		self.glade.connect_signals(self.dic)
 		
         def open_kybd(self):
