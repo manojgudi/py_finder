@@ -5,14 +5,21 @@ user=$(whoami)
 if [ $user != root ];
 then
 echo User needs root privileges
+echo try "\"sudo ./dep_install\""
 exit
 else
 echo Good man, you are root
 fi
 
+echo installing pygtk, pyglade and onboard packages
 
-# Install all dependencies & python-qt4
-apt-get install python-qt4
+# Install all dependencies python-gtk2
+apt-get install python-glade2
+apt-get install python-gtk2
 
+# Installing onboard
+apt-get install onboard
 
+# For developers
+# apt-get install glade-gtk2
 

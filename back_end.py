@@ -29,6 +29,10 @@ def app_search(keyword):
 		#save this into .recent_searches file
 		# We are saving output instead of keyword, since keyword==>result is many to one mapping 
 		#recent_search_w(output)
+
+		# problem is output from app_search is list with a delimiter \n; so 'app_name' becomes 'app_name\n', hence we use below function that removes delimiter
+		delim_number=output.find("\n")
+		output=output[:delim_number]
 		return output	
 		
 
@@ -42,16 +46,17 @@ def open_app(program_name):
 	# for i in special_program_name:
 		#if program_name==i:
 			#program_name=y #(mapped from special_program_name list)
-
-	sp.Popen([program_name])
 	
+	
+	sp.Popen([str(program_name)])
+		
 	# success code 100
 	return 100
 
 def search_file(keyword):
 	'''Search function used to locate single file, In: String keyword, Out: list of all relevant path of keyword'''	
 	if keyword=="":
-		print "keyword cannot be null"
+		print "keyword cannot be null/blank"
 		#error code 2
 		return 2
 	else:
@@ -59,10 +64,9 @@ def search_file(keyword):
 		result=p1.communicate()[0]
 
 		if result=="":
-			print "no file found"
+			print "no such file found"
 		else:
 			output=str2list(result)
-			print output
 			#open_path(output[3])
 			return output
 
@@ -74,7 +78,7 @@ def open_path(path_full):
 		path=(str(path_full.rpartition("/")[0]))
 		
 		### REPLACE thunar with pcmanfm for lxde
-		p1=sp.Popen(["thunar", path])
+		p1=sp.Popen(["pcmanfm", path])
 		
 		# success code 101
 		return 101
