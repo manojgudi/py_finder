@@ -29,7 +29,7 @@ class front_end:
 		
 		self.window=self.glade.get_object("window1")
 		self.window.show_all()
-		self.window.connect("destroy",self.gtk_main_quit)
+		self.window.connect("destroy",gtk.main_quit)
 		self.open_kybd()
 		
 		## dic start
