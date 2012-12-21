@@ -60,15 +60,24 @@ def search_file(keyword):
 		#error code 2
 		return 2
 	else:
-		p1=sp.Popen(["locate","-b",keyword], stdout=sp.PIPE)
+		p1=sp.Popen(["locate","-ibe",keyword], stdout=sp.PIPE)
 		result=p1.communicate()[0]
 
 		if result=="":
 			print "no such file found"
 		else:
 			output=str2list(result)
-			#open_path(output[3])
-			return output
+			filtered_output = filter_output(output)
+			return filtered_output
+
+def filter_output(file_list):
+
+	new_list = []
+	for path in file_list :
+		if '/.' not in path :
+			if path.startswith('/home') or path.startswith('/media') :
+				new_list.append(path)
+	return new_list
 
 # path_full = one element from output of search_file
 def open_path(path_full):
@@ -76,10 +85,10 @@ def open_path(path_full):
 	try:
 		# remove file_name
 		path=(str(path_full.rpartition("/")[0]))
-		
+
 		### REPLACE thunar with pcmanfm for lxde
 		p1=sp.Popen(["pcmanfm", path])
-		
+
 		# success code 101
 		return 101
 	except: 
