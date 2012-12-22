@@ -17,3 +17,9 @@ memusage
 	
 #v0.3
 same as v0.2
+
+#v.04
+memusage
+	with florence ~ 15-17mb
+	without florence ~ 9
+	flushes mem on closing: yes
