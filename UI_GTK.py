@@ -29,18 +29,24 @@ class front_end:
 		
 		self.window=self.glade.get_object("window1")
 		self.window.show_all()
-		self.window.connect("destroy",gtk.main_quit)
+		self.window.connect("destroy",self.main_quit)
 		self.open_kybd()
-		self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "gtk_main_quit" : gtk.main_quit }
+		
+		# Grab Notebook object
+		self.notebook = self.glade.get_object("notebook")
+		
+		# I found this useless and repeated code, do you require this pps ? please delete and commit later if no
+		#self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "gtk_main_quit" : gtk.main_quit }
 		
 		## dic start
 		self.dic = {
 		"on_apps_searchbox_activate" : self.on_apps_searchbox_activate,
-		"gtk_main_quit" : gtk.main_quit, 
+		"destroy" : self.main_quit, 
 		"on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, 
 		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate,
 		"on_file_searchbox_activate" : self.on_file_searchbox_activate,
-		"on_file_search_button_clicked" : self.on_file_searchbox_activate
+		"on_file_search_button_clicked" : self.on_file_searchbox_activate,
+		"on_notebook_switch_page" : self.on_notebook_focus_tab
 		}
 		## End of dic
 		self.glade.connect_signals(self.dic)
@@ -58,7 +64,7 @@ class front_end:
                 	except:
                 		print "onboard not found"
 
-	def gtk_main_quit(self,widget):
+	def main_quit(self,widget):
 		"""
 			Predefined callback.
 			Equivalent to self.quit()
@@ -165,8 +171,7 @@ class front_end:
 		from back_end import open_app as open_app
 		open_app(self.output)
 		
-      									
-						
+      	
  	def ErrorMessage(self, message, searchbox):
  		md = gtk.MessageDialog(self.window,
  					gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -279,7 +284,134 @@ class front_end:
 			print self.output
 			print list(self.output)
 			
-						
+	def on_notebook_focus_tab(self, notebook, page, page_num):
+		# If user opens third page [0, 1, 2]
+		if page_num == 2:
+			self.recent_search_frame_activate()
+			
+	def recent_search_frame_activate(self):
+		# Called for third page only	
+		# try block which removes the scrolled window if its already present
+		try:
+			self.recent_search_apps_scrolledwindow.remove(self.recent_search_apps_treeview)
+			self.recent_search_files_scrolledwindow.remove(self,recent_search_files_treeview)
+		except:
+			pass
+		
+		print "this is third page"
+		
+		from back_end import recent_search_r as recent_search_r
+
+		self.recent_search_apps_list = recent_search_r(1)
+		self.recent_search_files_list = recent_search_r(2)
+		
+		###############################################
+		####  Treestore FOR apps_list
+	       	self.recent_search_apps_treestore = gtk.TreeStore(str)
+			
+		for parent in self.recent_search_apps_list:
+			piter=self.recent_search_apps_treestore.append(None, [parent])
+		       		
+		# TreeView
+		self.recent_search_apps_treeview = gtk.TreeView(self.recent_search_apps_treestore)
+		self.recent_search_apps_treeview.connect('cursor-changed', self.take_to_page0)
+		
+		# Create Treeview column
+		self.recent_search_apps_tvcolumn = gtk.TreeViewColumn('Recent 5 searches')
+
+		#add tvcolumn to treeview
+		self.recent_search_apps_treeview.append_column(self.recent_search_apps_tvcolumn)
+			
+		# Create a CellRendererText to render data
+		self.recent_search_apps_cell = gtk.CellRendererText()
+			
+		# Add the cell to tvcolumn and allow it to expand
+		self.recent_search_apps_tvcolumn.pack_start(self.recent_search_apps_cell, True)
+			
+		# Set the cell to text attribute to column 0
+		self.recent_search_apps_tvcolumn.add_attribute(self.recent_search_apps_cell, 'text', 0)
+			
+		print "apps tree created!"
+			
+		# adding it to apps_scrolledwindow
+		self.recent_search_apps_scrolledwindow = self.glade.get_object("recent_search_apps_scrolledwindow")
+		self.recent_search_apps_scrolledwindow.add(self.recent_search_apps_treeview)
+		self.recent_search_apps_scrolledwindow.show_all()
+		#####
+		
+		###########################################################		
+		
+		#### TreeStore FOR files_list
+		
+	       	self.recent_search_files_treestore = gtk.TreeStore(str)
+			
+		for parent in self.recent_search_files_list:
+			piter=self.recent_search_files_treestore.append(None, [parent])
+		       		
+		# TreeView
+		self.recent_search_files_treeview = gtk.TreeView(self.recent_search_files_treestore)
+		self.recent_search_files_treeview.connect('cursor-changed', self.take_to_page1)
+		
+		# Create Treeview column
+		self.recent_search_files_tvcolumn = gtk.TreeViewColumn('Recent 5 searches')
+
+		#add tvcolumn to treeview
+		self.recent_search_files_treeview.append_column(self.recent_search_files_tvcolumn)
+			
+		# Create a CellRendererText to render data
+		self.recent_search_files_cell = gtk.CellRendererText()
+			
+		# Add the cell to tvcolumn and allow it to expand
+		self.recent_search_files_tvcolumn.pack_start(self.recent_search_files_cell, True)
+			
+		# Set the cell to text attribute to column 0
+		self.recent_search_files_tvcolumn.add_attribute(self.recent_search_files_cell, 'text', 0)
+			
+		print "files tree created!"
+			
+		# adding it to files_scrolledwindow
+		self.recent_search_files_scrolledwindow = self.glade.get_object("recent_search_files_scrolledwindow")
+		self.recent_search_files_scrolledwindow.add(self.recent_search_files_treeview)
+		self.recent_search_files_scrolledwindow.show_all()
+		#####
+		
+
+		
+	
+	# When clicked on recent_search_apps_element / similar to get_selected_path
+	def take_to_page0(self,widget,data=None):
+		self.recent_search_apps_treeview_instance=self.recent_search_apps_treeview.get_selection()
+		self.recent_search_apps_treeview_instance.set_mode(gtk.SELECTION_SINGLE)
+		
+		# get_selected returns 2 variables in tuples
+		self.var1,self.var2 = self.recent_search_apps_treeview_instance.get_selected()
+		self.result = self.var1.get_value(self.var2,0)
+
+		# self.result is keyword which user clicked
+		
+		# When clicked, launch take user to page 0
+		self.notebook.set_current_page(0)
+		# get searchbox and set its text value to self.result/keyword
+       		self.apps_searchbox=self.glade.get_object("apps_searchbox")
+       		self.apps_searchbox.set_text(self.result)				
+
+	def take_to_page1(self, widget, data=None):
+		self.recent_search_files_treeview_instance=self.recent_search_files_treeview.get_selection()
+		self.recent_search_files_treeview_instance.set_mode(gtk.SELECTION_SINGLE)
+		
+		# get_selected returns 2 variables in tuples
+		self.var1,self.var2 = self.recent_search_files_treeview_instance.get_selected()
+		self.result = self.var1.get_value(self.var2,0)
+		
+		# self.result is keyword which user clicked
+		
+		# When clicked, launch take user to page 1
+		self.notebook.set_current_page(1)
+		# get searchbox and set its text value to self.result/keyword
+       		self.files_searchbox=self.glade.get_object("file_searchbox")
+       		self.files_searchbox.set_text(self.result)				
+
+							
 
 if __name__=="__main__" :
 	front_obj=front_end()
