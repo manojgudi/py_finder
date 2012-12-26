@@ -85,12 +85,12 @@ def search_filesystem(keyword) :
 				if '.' not in j :
 					if keyword.upper() in j.upper() :
 						fin_list.append(i[0] + '/' +j + '/')
-					for k in i[2] :
-					#removes all the hidden files at the root
-						if not k.startswith('.') :
-							#If the keyword is present then append
-							if keyword.upper() in k.upper() :
-								fin_list.append(i[0]+'/'+k)
+			for k in i[2] :
+			#removes all the hidden files at the root
+				if not k.startswith('.') :
+					#If the keyword is present then append
+					if keyword.upper() in k.upper() :
+						fin_list.append(i[0]+'/'+k)
 							
 	# delete unwated variables
 	del(raw_home)
@@ -105,12 +105,12 @@ def search_filesystem(keyword) :
 				if '.' not in j :
 					if keyword.upper() in j.upper() :
 						fin_list.append(i[0] + '/' +j + '/')
-					for k in i[2] :
-					#removes all the hidden files at the root
-						if not k.startswith('.') :
-							#If the keyword is present then append
-							if keyword.upper() in k.upper() :
-								fin_list.append(i[0]+'/'+k)
+			for k in i[2] :
+			#removes all the hidden files at the root
+				if not k.startswith('.') :
+					#If the keyword is present then append
+					if keyword.upper() in k.upper() :
+						fin_list.append(i[0]+'/'+k)
 								
 							
 	del(raw_media)
