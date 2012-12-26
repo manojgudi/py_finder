@@ -3,10 +3,6 @@
 import sys
 import subprocess as sp
 
-'''
-	To check wether the PYGTK dependences are installed.
-	If not installed then 
-'''
 
 try:
 	import pygtk
@@ -40,6 +36,8 @@ class front_end:
 		self.notebook = self.glade.get_object("notebook")
 		
 		# I found this useless and repeated code, do you require this pps ? please delete and commit later if no
+		#self.dic = {"on_apps_searchbox_activate" : self.on_apps_searchbox_activate, "gtk_main_quit" : gtk.main_quit }
+		
 		## dic start
 		self.dic = {
 		"on_apps_searchbox_activate" : self.on_apps_searchbox_activate,
@@ -54,9 +52,6 @@ class front_end:
 		self.glade.connect_signals(self.dic)
 		
         def open_kybd(self):
-		'''
-			This method opens virtual/touch keyboard.
-		'''
                 try:
                         sp.Popen("florence")
                         print "started florence onscreen keyboard"
@@ -86,79 +81,83 @@ class front_end:
 				print "cannot kill virtual keyboard instance since no such app started"			
 		gtk.main_quit()
                 
+	def main(self):		
+	# Insert any code just before apps goes into gtk.main()
+		print 'main()'
 
-	def on_apps_searchbox_activate(self,widget):
-		print "apps_searchbox working"
-		self.apps_searchbox=self.glade.get_object("apps_searchbox")
-		self.keyword=self.apps_searchbox.get_text()
-		print self.keyword
-	
-	# Importing functions
-	from back_end import app_search as app_search
-	self.output=app_search(self.keyword)		
 
-	### Button
-	# Create new button
-	
-	# Get frame
-	self.apps_result_frame = self.glade.get_object("apps_result_frame")				
-	
-	
-	if (self.output==0):
-		# Error condition
-		message="blank keyword!"
-		self.ErrorMessage(message, self.apps_searchbox)
+        def on_apps_searchbox_activate(self,widget):
+       		print "apps_searchbox working"
+       		self.apps_searchbox=self.glade.get_object("apps_searchbox")
+       		self.keyword=self.apps_searchbox.get_text()
+       		print self.keyword
 		
+		# Importing functions
+		from back_end import app_search as app_search
+		self.output=app_search(self.keyword)		
 
-	elif (self.output==1):
-		# Error condition
-		message="No such application found"
-		self.ErrorMessage(message, self.apps_searchbox)
+		### Button
+		# Create new button
+		
+		# Get frame
+		self.apps_result_frame = self.glade.get_object("apps_result_frame")				
+		
+		
+		if (self.output==0):
+			# Error condition
+			message="blank keyword!"
+			self.ErrorMessage(message, self.apps_searchbox)
+			
 
-	else:   
-		### Application Found:
-		
-		# If Frame already contains iconview, then remove it
-		try:
-			self.apps_result_frame.remove(self.apps_search_iconview)
-		except: pass
-						
-		# make new liststore
-		self.apps_search_liststore = gtk.ListStore(str, gtk.gdk.Pixbuf)
-		
-		# Find icon 
-		self.icon="/usr/share/icons/hicolor/48x48/apps/"+self.output+".png"
-		self.default_icon="graphics/default_apps.png"
-		
-		# Set pixbuf
-		try:
-			self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.icon)
-		except:
-			# If icon not found, then use defaults
-			self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.default_icon)
-		
-		# Append to model
-		self.apps_search_liststore.append([self.output,self.apps_search_pixbuf])
-		
-		# Make icon view
-		self.apps_search_iconview = gtk.IconView(self.apps_search_liststore)
-		
-		# Icon view settings
-		self.apps_search_iconview.set_text_column(0)
-		self.apps_search_iconview.set_pixbuf_column(1)
-		self.apps_search_iconview.set_orientation(gtk.ORIENTATION_VERTICAL)
-		self.apps_search_iconview.set_selection_mode(gtk.SELECTION_SINGLE)
-		
-		# connecter, when selection changed, call on_activate, and pass it apps_searchbox
-		self.apps_search_iconview.connect('selection_changed', self.on_activate, self.apps_searchbox)
-		
-		# iconview set columns
-		self.apps_search_iconview.set_columns(1)
-		
-		# Add iconview to frame	
-		self.apps_result_frame.add(self.apps_search_iconview)
-		print "added iconview to frame"
-		self.apps_result_frame.show_all()
+		elif (self.output==1):
+			# Error condition
+			message="No such application found"
+			self.ErrorMessage(message, self.apps_searchbox)
+
+		else:   
+			### Application Found:
+			
+			# If Frame already contains iconview, then remove it
+			try:
+				self.apps_result_frame.remove(self.apps_search_iconview)
+			except: pass
+							
+			# make new liststore
+			self.apps_search_liststore = gtk.ListStore(str, gtk.gdk.Pixbuf)
+			
+			# Find icon 
+			self.icon="/usr/share/icons/hicolor/48x48/apps/"+self.output+".png"
+			self.default_icon="graphics/default_apps.png"
+			
+			# Set pixbuf
+			try:
+				self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.icon)
+			except:
+				# If icon not found, then use defaults
+				self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.default_icon)
+			
+			# Append to model
+			self.apps_search_liststore.append([self.output,self.apps_search_pixbuf])
+			
+			# Make icon view
+			self.apps_search_iconview = gtk.IconView(self.apps_search_liststore)
+			
+			# Icon view settings
+			self.apps_search_iconview.set_text_column(0)
+			self.apps_search_iconview.set_pixbuf_column(1)
+			self.apps_search_iconview.set_orientation(gtk.ORIENTATION_VERTICAL)
+			self.apps_search_iconview.set_selection_mode(gtk.SELECTION_SINGLE)
+			
+			# connecter, when selection changed, call on_activate, and pass it apps_searchbox
+			self.apps_search_iconview.connect('selection_changed', self.on_activate, self.apps_searchbox)
+			
+			# iconview set columns
+			self.apps_search_iconview.set_columns(1)
+			
+			# Add iconview to frame	
+			self.apps_result_frame.add(self.apps_search_iconview)
+			print "added iconview to frame"
+			self.apps_result_frame.show_all()
 			
 						
 	
@@ -375,6 +374,7 @@ class front_end:
 		self.recent_search_files_scrolledwindow.add(self.recent_search_files_treeview)
 		self.recent_search_files_scrolledwindow.show_all()
 		#####
+			
 	
 	# When clicked on recent_search_apps_element / similar to get_selected_path
 	def take_to_page0(self,widget,data=None):
@@ -407,4 +407,5 @@ class front_end:
 		self.notebook.set_current_page(1)
 		# get searchbox and set its text value to self.result/keyword
        		self.files_searchbox=self.glade.get_object("file_searchbox")
-       		self.files_searchbox.set_text(self.result)
+       		self.files_searchbox.set_text(self.result)				
+

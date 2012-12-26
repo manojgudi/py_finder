@@ -1,4 +1,4 @@
-import UI_GTK.py
+import UI_GTK
 
 try:
 	import elementtree.Elementtree
@@ -9,9 +9,9 @@ except:
 		This should invoke the UI_GTK.py python program which contains the Front End written in python.
 	'''
 if __name__=="__main__" :
-	front_obj=front_end()
+	front_obj=UI_GTK.front_end()
 	front_obj.main()
-    gtk.main()
+    	UI_GTK.gtk.main()
 	
 	'''
 		Need to add the constraints
