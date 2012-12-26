@@ -264,7 +264,7 @@ class front_end:
 		# get_selected returns 2 variables in tuples
 		self.var1,self.var2=self.treeview_instance.get_selected()
 		self.result=self.var1.get_value(self.var2,0)
-		
+
 		# When clicked, launch this function
 		self.on_folder_launch(self.result)
 
@@ -294,10 +294,15 @@ class front_end:
 		# try block which removes the scrolled window if its already present
 		try:
 			self.recent_search_apps_scrolledwindow.remove(self.recent_search_apps_treeview)
-			self.recent_search_files_scrolledwindow.remove(self,recent_search_files_treeview)
 		except:
 			pass
 		
+		try:
+			self.recent_search_files_scrolledwindow.remove(self.recent_search_files_treeview)
+		except:
+			pass
+
+				
 		print "this is third page"
 		
 		from back_end import recent_search_r as recent_search_r
@@ -383,8 +388,13 @@ class front_end:
 		
 		# get_selected returns 2 variables in tuples
 		self.var1,self.var2 = self.recent_search_apps_treeview_instance.get_selected()
+		
+		# Initially both variables are None, so
+		if (self.var2 == None):
+			return self.var1[0][0]
+			
 		self.result = self.var1.get_value(self.var2,0)
-
+		
 		# self.result is keyword which user clicked
 		
 		# When clicked, launch take user to page 0
@@ -394,11 +404,17 @@ class front_end:
        		self.apps_searchbox.set_text(self.result)				
 
 	def take_to_page1(self, widget, data=None):
+
 		self.recent_search_files_treeview_instance=self.recent_search_files_treeview.get_selection()
 		self.recent_search_files_treeview_instance.set_mode(gtk.SELECTION_SINGLE)
 		
 		# get_selected returns 2 variables in tuples
 		self.var1,self.var2 = self.recent_search_files_treeview_instance.get_selected()
+
+		# Initially both variables are None, so
+		if (self.var2 == None):
+			return self.var1[0][0]
+
 		self.result = self.var1.get_value(self.var2,0)
 		
 		# self.result is keyword which user clicked

@@ -1,19 +1,19 @@
 <data>
 	<apps>
-		<gen>pid</gen>
-		<gen>lea</gen>
+		<gen>tomboy</gen>
+		<gen>google-chrome</gen>
+		<gen>google</gen>
+		<gen>chrom</gen>
 		<gen>firefox</gen>
-		<gen>pid</gen>
-		<gen>Chrom</gen>
 
 	</apps>
 	
 	<files>
+		<gen>back</gen>
+		<gen>nano</gen>
+		<gen>wall</gen>
 		<gen>test</gen>
 		<gen>screen</gen>
-		<gen>mintmenu</gen>
-		<gen>pidgin</gen>
-		<gen>home</gen>
 	
 	</files>
 	
