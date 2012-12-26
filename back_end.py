@@ -123,7 +123,7 @@ def open_path(path_full):
 	""" Tapping relevant search result invokes file explorer to open folder containing relevant file, In: Single string of full_path Out: Error/Success number """
 	try:
 		# remove file_name
-		print 'pranav is curious \n' + str(path_full.rpartition("/")[0])
+
 		path=(str(path_full.rpartition("/")[0]))
 
 		### REPLACE thunar with pcmanfm for lxde
