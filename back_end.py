@@ -1,5 +1,6 @@
 
 import subprocess as sp
+import os
 
 def app_search(keyword):
 	""" This function is used to query dpkg and return single relevant answer; In: single string, Out: Error Number or string of relevant search """
@@ -56,33 +57,73 @@ def search_file(keyword):
 		#error code 2
 		return 2
 	else:
-		p1=sp.Popen(["locate","-ibe",keyword], stdout=sp.PIPE)
-		result=p1.communicate()[0]
+		result = search_filesystem(keyword)
 
 		if result=="":
 			print "no such file found"
 		else:
-			output=str2list(result)
-			filtered_output = filter_output(output)
-			
-			# Write to .data.xml
 			recent_search_w(keyword,2)
-			return filtered_output
+			return result
 
-def filter_output(file_list):
+def search_filesystem(keyword) :
+	
+	raw_home = os.walk('/home/')
+	raw_media = os.walk('/media/aakash/')
 
-	new_list = []
-	for path in file_list :
-		if '/.' not in path :
-			if path.startswith('/home') or path.startswith('/media') :
-				new_list.append(path)
-	return new_list
+	fin_list = []
+	'''
+		This block of code will remove all hidden files and folders
+		to remove the unncessary '/.' files and folders to be searched.
+	'''
 
+	#Search in home folder
+	for i in raw_home :
+		#Search for hidden folders - remove all hidden folders.
+		if '/.' not in i[0] :
+			for j in i[1] :
+			#removes all hidden folders at the root
+				if '.' not in j :
+					if keyword.upper() in j.upper() :
+						fin_list.append(i[0] + '/' +j + '/')
+					for k in i[2] :
+					#removes all the hidden files at the root
+						if not k.startswith('.') :
+							#If the keyword is present then append
+							if keyword.upper() in k.upper() :
+								fin_list.append(i[0]+'/'+k)
+							
+	# delete unwated variables
+	del(raw_home)
+
+	#Search in media folder
+
+	for i in raw_media :
+		#Search for hidden folders - remove all hidden folders.
+		if '/.' not in i[0] :
+			for j in i[1] :
+			#removes all hidden folders at the root
+				if '.' not in j :
+					if keyword.upper() in j.upper() :
+						fin_list.append(i[0] + '/' +j + '/')
+					for k in i[2] :
+					#removes all the hidden files at the root
+						if not k.startswith('.') :
+							#If the keyword is present then append
+							if keyword.upper() in k.upper() :
+								fin_list.append(i[0]+'/'+k)
+								
+							
+	del(raw_media)
+	#Make it into a single list 
+
+	return fin_list
+	
 # path_full = one element from output of search_file
 def open_path(path_full):
 	""" Tapping relevant search result invokes file explorer to open folder containing relevant file, In: Single string of full_path Out: Error/Success number """
 	try:
 		# remove file_name
+		print 'pranav is curious \n' + str(path_full.rpartition("/")[0])
 		path=(str(path_full.rpartition("/")[0]))
 
 		### REPLACE thunar with pcmanfm for lxde
@@ -215,15 +256,3 @@ def recent_search_w(result, mode):
 		write(files_output, mode)	
 	
 	print "written to xml"
-					
-# Formatted String to list
-def str2list(str_var):
-	""" Function to convert long formatted string of delimited (/n) to a list; In: Long Formatted List Out: List of elements """
-	number_lines=str_var.count("\n")
-	list_var=[None]*(number_lines)
-	temp2=str_var
-	for i in range(number_lines):
-		temp=str(temp2.partition("\n")[0])
-		list_var[i]=temp
-		temp2=str(temp2.partition("\n")[2])
-	return list_var				
