@@ -321,6 +321,47 @@
             <property name="tab_fill">False</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkLabel" id="label1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">&lt;b&gt;Py Finder V1.0&lt;/b&gt;
+Built using
+
+-&gt; libgtk 2.0+
+-&gt; PyGTK2.24
+-&gt; Glade 3.8.0
+
+
+
+&lt;b&gt;Developers:&lt;/b&gt;
+
+-&gt; Manoj G &lt;i&gt;(manoj.p.gudi@gmail.com)&lt;/i&gt;
+-&gt; Pranav S &lt;i&gt;(pps.pranav@gmail.com)&lt;/i&gt;
+
+
+Please find documentation/file bug-reports at -
+            &lt;a href="https://github.com/manojgudi/py_finder"&gt;Py_Finder@github&lt;/a&gt;
+
+Released under &lt;b&gt;___ License&lt;/b&gt;</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child type="tab">
+          <object class="GtkLabel" id="about_us">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">About Us</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="position">3</property>
+            <property name="tab_fill">False</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
