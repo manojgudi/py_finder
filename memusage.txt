@@ -23,3 +23,11 @@ memusage
 	with florence ~ 15-17mb
 	without florence ~ 9
 	flushes mem on closing: yes
+
+#v.05
+memusage
+	with florence ~ 16-18mb
+
+#v0.6
+memusage
+	same as v.06
