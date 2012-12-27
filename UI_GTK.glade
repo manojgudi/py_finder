@@ -99,14 +99,15 @@
             </child>
             <child type="label">
               <object class="GtkLabel" id="apps_frame_title">
+                <property name="width_request">285</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xpad">148</property>
+                <property name="xpad">40</property>
                 <property name="ypad">12</property>
-                <property name="label" translatable="yes">Apps</property>
+                <property name="label" translatable="yes">&lt;b&gt;Application Search&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
                 <property name="ellipsize">start</property>
                 <property name="width_chars">11</property>
-                <property name="single_line_mode">True</property>
                 <property name="max_width_chars">30</property>
               </object>
             </child>
@@ -202,9 +203,10 @@
               <object class="GtkLabel" id="files_frame_title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xpad">148</property>
+                <property name="xpad">85</property>
                 <property name="ypad">12</property>
-                <property name="label" translatable="yes">Files</property>
+                <property name="label" translatable="yes">&lt;b&gt;Files Search&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
               </object>
             </child>
           </object>
