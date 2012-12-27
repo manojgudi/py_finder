@@ -15,7 +15,7 @@ Features:
 Built Using:
 ------------
 
-* libgtk 2.0+
+* libgtk 2.24.8+
 * PyGTK2.24 
 * Glade 3.8.0
 
@@ -25,18 +25,23 @@ Installation:
 
 1. It is assumed that the system has Python 2.7, Florence keyboard or Onscreen Keyboard.
 
-2. Open Termial and navigate to this directory; then type 
+2. To install dependencies, open terminal, `cd` to current directory, and then type ::
 
-3. This installs all dependencies required for this application 
+     $ sudo ./dep_install
 
-    sudo ./dep_install
+3. To  install application after installing dependencies, open a new terminal, `cd` to current directory and then type
 
-4. To run this application from terminal
+    $ ./app_install
 
-    python Py_Finder.py
-	
+4. After successful installation, We'll have to add it to lxpanel;
+
+* Right Click lxpanel > Panel settings > Panel Applets
+* Click on Add > Application Launchbar > Add
+* Once, Application Launchbar is added, then Edit on Application Launchbar > Add Py Finder (which is under Universal Access)
+
+5. That's it! Launch Py Finder by clicking on small icon in lxpanel
 	
 Bugs:
 -----
 
-Please report all bugs and shortcomings here on github
+Please report all bugs and errors here on github
