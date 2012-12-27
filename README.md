@@ -15,26 +15,28 @@ Features:
 Built Using:
 ------------
 
-. libgtk 2.0+
-. PyGTK2.24 
-. Glade 3.8.0
+* libgtk 2.0+
+* PyGTK2.24 
+* Glade 3.8.0
 
 
 Installation:
 -------------
 
-* It is assumed that the system has Python 2.7, Florence keyboard or Onscreen Keyboard.
+1. It is assumed that the system has Python 2.7, Florence keyboard or Onscreen Keyboard.
 
-* Open Termial and navigate to this directory; then type ::
-	sudo ./dep_install
-   
-   This installs all dependencies required for this application
-   
-* To run this application from terminal ::
-	python Py_Finder.py
+2. Open Termial and navigate to this directory; then type 
+
+3. This installs all dependencies required for this application 
+
+    sudo ./dep_install
+
+4. To run this application from terminal
+
+    python Py_Finder.py
 	
 	
 Bugs:
 -----
 
-* Please report all bugs and shortcomings here on github
+Please report all bugs and shortcomings here on github
