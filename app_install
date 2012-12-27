@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Path variables
+USER=`whoami`
+CURRENT_PATH=`pwd`
+
+# Fixing path variable in startup file
+filetowork=startup
+sed -i "s/USER_NAME/$USER/g" $filetowork;
+
+#  Make .py_finder folder
+echo -e "making new directory /home/$USER/.py_finder"
+cd /home/$USER
+mkdir .py_finder
+
+
+# Copying files to .py_finder folder
+echo -e "copying python files... \n"
+cd $CURRENT_PATH
+cp *.py /home/$USER/.py_finder/
+cp *.glade /home/$USER/.py_finder/
+cp -r graphics/ /home/$USER/.py_finder/
+cp startup /home/$USER/.py_finder/
+
+
+# Fixing Exec variable in py_finder.desktop and copying it locally
+cd $CURRENT_PATH
+cp dependencies/py_finder.desktop py_finder.desktop
+filetowork=py_finder.desktop
+sed -i "s/USER_NAME/$USER/g" $filetowork;
+
+
+
+# Moving Desktop configuration file- py_finder.desktop and deleting local copy
+echo -e "Copying py_finder.desktop file to /usr/share/applications/  \nThis requires super-user privileges"
+sudo cp $CURRENT_PATH/py_finder.desktop /usr/share/applications/
+status=$?
+if [ $status -eq 0 ];then
+	echo -e "Copied py_finder.desktop file successfully \n\n"
+	rm $CURRENT_PATH/py_finder.desktop
+else
+	echo "Aborting installation"
+	exit
+fi
+
+
+# Moving icon file- py_finder.svg
+echo -e "Copying py_finder icon to /usr/share/pixmaps/"
+sudo cp $CURRENT_PATH/graphics/py_finder.svg /usr/share/pixmaps/py_finder.svg
+status=$?
+
+if [ $status -eq 0 ];then
+	echo -e "Copied icon successfully \n\n"
+else
+	echo "Aborting installation"
+	exit
+fi
+
+echo -e "Installation finished successfully... \nPlease add this application to lxpanel from Application Launchbar under Accessibility"

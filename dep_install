@@ -32,3 +32,4 @@ python setup.py install
 echo deleting unzipped files and folder
 cd ..
 rm -rf elementtree-1.2.6-20050316
+

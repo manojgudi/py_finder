@@ -21,7 +21,12 @@ except:
 class front_end:
 	""" This is front handler for appsearch feature"""
 	def __init__(self):
-	
+		
+		# Set environment path
+		import os
+		path=os.getenv("HOME")+"/.py_finder/"
+		os.chdir(path)
+		
 		#Set glade file
 		self.gladefile = "./UI_GTK.glade"
 		self.glade = gtk.Builder()

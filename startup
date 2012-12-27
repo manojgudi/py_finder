@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /home/vm/.py_finder
+python Py_Finder.py
