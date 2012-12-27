@@ -5,7 +5,8 @@ USER=`whoami`
 CURRENT_PATH=`pwd`
 
 # Fixing path variable in startup file
-filetowork=startup
+cp startup temp_startup
+filetowork=temp_startup
 sed -i "s/USER_NAME/$USER/g" $filetowork;
 
 #  Make .py_finder folder
@@ -20,8 +21,8 @@ cd $CURRENT_PATH
 cp *.py /home/$USER/.py_finder/
 cp *.glade /home/$USER/.py_finder/
 cp -r graphics/ /home/$USER/.py_finder/
-cp startup /home/$USER/.py_finder/
-
+cp temp_startup /home/$USER/.py_finder/startup
+rm temp_startup
 
 # Fixing Exec variable in py_finder.desktop and copying it locally
 cd $CURRENT_PATH
