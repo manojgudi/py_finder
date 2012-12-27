@@ -42,7 +42,6 @@ class front_end:
 		self.dic = {
 		"on_apps_searchbox_activate" : self.on_apps_searchbox_activate,
 		"gtk_main_quit" : self.main_quit, 
-		"on_apps_launch_button_clicked" : self.on_apps_launch_button_clicked, 
 		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate,
 		"on_file_searchbox_activate" : self.on_file_searchbox_activate,
 		"on_file_search_button_clicked" : self.on_file_searchbox_activate,
@@ -96,9 +95,6 @@ class front_end:
 		from back_end import app_search as app_search
 		self.output=app_search(self.keyword)		
 
-		### Button
-		# Create new button
-		
 		# Get frame
 		self.apps_result_frame = self.glade.get_object("apps_result_frame")				
 		
@@ -159,19 +155,6 @@ class front_end:
 			print "added iconview to frame"
 			self.apps_result_frame.show_all()
 			
-						
-	
-	def on_activate(self, widget, searchbox):
-
-		print "item selected "
-		# Clear searchbox
-		searchbox.set_text("")
-		
-		#open app
-		from back_end import open_app as open_app
-		open_app(self.output)
-		
-      	
  	def ErrorMessage(self, message, searchbox):
  		md = gtk.MessageDialog(self.window,
  					gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -181,6 +164,23 @@ class front_end:
  		md.run()
  		md.destroy()
  		
+ 		# Remove text from file_searchbox
+ 		searchbox.set_text("")
+ 		
+	def on_activate(self, widget, searchbox):
+
+		print "item selected "
+		# Clear searchbox
+		searchbox.set_text("")
+		
+		#open app
+		from back_end import open_app as open_app
+		self.did_app_open=open_app(self.output)
+		if self.did_app_open == 1001:
+			self.ErrorMessage("Couldn't Open Application",searchbox)
+		else:
+			print "App opened successfully..."
+      	
  		# Remove text from file_searchbox
  		searchbox.set_text("")
  		
@@ -201,7 +201,7 @@ class front_end:
 		# get file_search_frame from glade
 		self.file_search_frame = self.glade.get_object("file_search_frame")
 				
-		if (self.output_list == None):
+		if (self.output_list == []):
 			# If no such file found, then warn
 			self.message="No File or Folder found by that name"
 			self.ErrorMessage(self.message,self.file_searchbox)
@@ -274,16 +274,6 @@ class front_end:
 		open_path(path)
 		
 	
-	def on_apps_launch_button_clicked(self, widget):
-		from back_end import open_app as open_app
-		try:
-			self.did_app_open=open_app(str(self.output))
-			print self.did_app_open
-		except:
-			print "app not found"
-			print self.output
-			print list(self.output)
-			
 	def on_notebook_focus_tab(self, notebook, page, page_num):
 		# If user opens third page [0, 1, 2]
 		if page_num == 2:

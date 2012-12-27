@@ -44,11 +44,18 @@ def app_search(keyword):
 def open_app(program_name):
 	
 	''' Function used to open app when tapping of relevant keyword; In: single string, Out: Success Number '''
+	try:
+		sp.Popen([str(program_name)])
+		# success code 100
+		program_output=100
 	
-	sp.Popen([str(program_name)])
+	# Cannot Open Application
+	except OSError: 
+		program_output=1001
+		print "Cannot Open Application"
+	finally:
+		return program_output
 		
-	# success code 100
-	return 100
 
 def search_file(keyword):
 	'''Search function used to locate single file, In: String keyword, Out: list of all relevant path of keyword'''	
@@ -58,11 +65,9 @@ def search_file(keyword):
 		return 2
 	else:
 		result = search_filesystem(keyword)
-
-		if result=="":
+		if result == [None] :
 			print "no such file found"
 		else:
-			recent_search_w(keyword,2)
 			return result
 
 def search_filesystem(keyword) :
@@ -71,10 +76,10 @@ def search_filesystem(keyword) :
 	raw_media = os.walk('/media/aakash/')
 
 	fin_list = []
-	'''
-		This block of code will remove all hidden files and folders
-		to remove the unncessary '/.' files and folders to be searched.
-	'''
+	
+	"""This block of code will remove all hidden files and folders
+	to remove the unncessary '/.' files and folders to be searched."""
+	
 
 	#Search in home folder
 	for i in raw_home :
@@ -115,8 +120,14 @@ def search_filesystem(keyword) :
 							
 	del(raw_media)
 	#Make it into a single list 
-
+	
+	# If fin_list is not Null, only then write keyword in xml
+	if fin_list != []:
+		print 'file_search_list is not null'
+		recent_search_w(keyword,2)	
 	return fin_list
+		
+
 	
 # path_full = one element from output of search_file
 def open_path(path_full):
@@ -136,6 +147,35 @@ def open_path(path_full):
 		return 3
 
 
+def get_xml_path():
+	import os
+	
+	# Current Home Working directory
+	home=os.getenv('HOME')
+	path = home+'/.local/.data.xml'
+	
+	# If .data.xml exists in ~/.local then simply return path
+	if os.path.exists(path) == True:
+		print path
+		return path
+	else:
+		print "First Run, copying .data.xml"
+		first_run()
+		return path
+	
+def first_run():
+	# copy the .data.xml 
+	import os
+	import shutil
+	
+	home = os.getenv('HOME')
+	dest_path = home+'/.local/.data.xml'
+	src_path=os.getcwd()+'/.data.xml'
+	print src_path
+	
+	shutil.copy(src_path,dest_path)
+	print 'done'
+
 # Called when 
 def recent_search_r(mode):
 	""" Reading the .data.xml file.
@@ -147,12 +187,16 @@ def recent_search_r(mode):
 		print "Please Run dep_install first"
 	
 	# Code Retriving
-	try:
-		tree = et.parse('.data.xml')
+	try:	
+		path = get_xml_path()
+		print path
+		tree = et.parse(path)
+		print ".data.xml found"
 	except:
-		print "data.xml not found, exiting"
-		exit()
-	
+		# User Process
+		print ".data.xml not found..."
+		print "First Run of User"
+
 	# Defining variables
 	apps_output = [None] * 5
 	files_output = [None] * 5
@@ -194,6 +238,7 @@ def recent_search_r(mode):
 def recent_search_w(result, mode):
 	""" Called by other functions to write a successful result to .recent_searches.file; 
 	result is the successful keyword, mode is to specify the keyword belongs to files section or apps section
+	If mode = 1 => write for apps section, else write in file section
 	In: Successful String Result from app_search()/file_search() and mode; Out: None  """
 	
 	apps_output=recent_search_r(1)
@@ -221,10 +266,12 @@ def recent_search_w(result, mode):
 			import elementtree.ElementTree as et
 		except:
 			print "Please Run dep_install first"
-	
+		# XML path variable
+		path = get_xml_path()
+
 		# Code Retriving
 		try:
-			tree = et.parse('.data.xml')
+			tree = et.parse(path)
 			root = tree.getroot()
 		except:
 			print ".data.xml not found, exiting"
@@ -243,8 +290,8 @@ def recent_search_w(result, mode):
 				if files.tag == 'files':
 					for i in range(len(any_list)):
 						files[i].text=any_list[i]
-		
-		tree.write('.data.xml')	
+
+		tree.write(path)	
 
 	# If mode is 1, update apps_list, else update files_list
 	if mode == 1:
@@ -254,5 +301,4 @@ def recent_search_w(result, mode):
 	else :
 		files_output=update_list(files_output)
 		write(files_output, mode)	
-	
 	print "written to xml"
