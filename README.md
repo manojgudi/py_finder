@@ -40,6 +40,15 @@ Installation:
 * Once, Application Launchbar is added, then Edit on Application Launchbar > Add Py Finder (which is under Universal Access)
 
 5. That's it! Launch Py Finder by clicking on small icon in lxpanel
+
+6. To uninstall application, open a new terminal, cd to current folder, and run uninstall scripts-
+	
+    $ ./app_uninstall
+
+7. To uninstall dependencies installed, open a new terminal, cd to current folder, and run uninstall scripts-
+	
+    $ ./dep_uninstall
+    
 	
 Bugs:
 -----
