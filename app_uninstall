@@ -1,0 +1,15 @@
+#!/bin/bash
+
+USER=`whoami`
+
+# remove files
+rm -rf /home/$USER/.py_finder
+
+# Removing py_finder.desktop and py_finder.svg pixmap
+echo "Removing py_finder.desktop and py_finder.svg pixmap, requires superuser privileges"
+sudo rm /usr/share/applications/py_finder.desktop
+sudo rm /usr/share/pixmaps/py_finder.svg
+status=$?
+if [ $status -eq 0 ];then
+	echo -e "Application uninstalled successfully..."
+fi
