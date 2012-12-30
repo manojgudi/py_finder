@@ -99,14 +99,15 @@
             </child>
             <child type="label">
               <object class="GtkLabel" id="apps_frame_title">
+                <property name="width_request">285</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xpad">148</property>
+                <property name="xpad">40</property>
                 <property name="ypad">12</property>
-                <property name="label" translatable="yes">Apps</property>
+                <property name="label" translatable="yes">&lt;b&gt;Application Search&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
                 <property name="ellipsize">start</property>
                 <property name="width_chars">11</property>
-                <property name="single_line_mode">True</property>
                 <property name="max_width_chars">30</property>
               </object>
             </child>
@@ -202,9 +203,10 @@
               <object class="GtkLabel" id="files_frame_title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xpad">148</property>
+                <property name="xpad">85</property>
                 <property name="ypad">12</property>
-                <property name="label" translatable="yes">Files</property>
+                <property name="label" translatable="yes">&lt;b&gt;Files Search&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
               </object>
             </child>
           </object>
@@ -229,7 +231,6 @@
             <property name="can_focus">False</property>
             <property name="label_xalign">0</property>
             <property name="shadow_type">none</property>
-            <signal name="focus" handler="on_recent_search_frame_focus" swapped="no"/>
             <child>
               <object class="GtkVBox" id="vbox3">
                 <property name="visible">True</property>
@@ -314,10 +315,50 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Recent</property>
-            <signal name="activate-link" handler="gtk_widget_grab_focus" swapped="no"/>
           </object>
           <packing>
             <property name="position">2</property>
+            <property name="tab_fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">&lt;b&gt;Py Finder V1.0&lt;/b&gt;
+
+Built using:
+
+-&gt; libgtk 2.0+
+-&gt; PyGTK2.24
+-&gt; Glade 3.8.0
+
+
+&lt;b&gt;Developers:&lt;/b&gt;
+
+-&gt; Manoj G &lt;a href="mailto:manoj.p.gudi@gmail.com"&gt;&lt;i&gt;(manoj.p.gudi@gmail.com)&lt;/i&gt;&lt;/a&gt;
+-&gt; Pranav S &lt;a href="mailto:pps.pranav@gmail.com"&gt;&lt;i&gt;(pps.pranav@gmail.com)&lt;/i&gt;&lt;/a&gt;
+
+
+Please find documentation/file bug-reports at -
+            &lt;a href="https://github.com/manojgudi/py_finder"&gt;Py_Finder@github&lt;/a&gt;
+
+Released under &lt;a href="http://www.gnu.org/licenses/gpl-2.0.txt"&gt;&lt;b&gt;GPL V2 License&lt;/b&gt;&lt;/a&gt;</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child type="tab">
+          <object class="GtkLabel" id="about_us">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">About Us</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="position">3</property>
             <property name="tab_fill">False</property>
           </packing>
         </child>

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Check for user privileges
+user=$(whoami)
+if [ $user != root ];
+then
+echo User needs root privileges
+echo try "\"sudo ./dep_uninstall\""
+exit
+else
+echo Good man, you are root
+fi
+
+echo "Purging pyglade and elementtree libs"
+
+apt-get purge python-glade2
+
+# Removing etree folder
+rm -rf /usr/lib/python2.7/xml/etree/

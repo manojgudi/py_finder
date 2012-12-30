@@ -1,0 +1,2 @@
+#!/bin/bash
+python /opt/py_finder/Py_Finder.py

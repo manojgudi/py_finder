@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Path variables
+CURRENT_PATH=`pwd`
+
+#  Make .py_finder folder
+echo -e "making new directory /opt/py_finder, needs user privileges \n"
+sudo mkdir /opt/py_finder/
+
+
+# Copying files to .py_finder folder
+echo -e "copying python files... \n"
+cd $CURRENT_PATH
+sudo cp *.py /opt/py_finder/
+sudo cp *.glade /opt/py_finder/
+sudo cp -r graphics/ /opt/py_finder/
+sudo cp startup /opt/py_finder/startup
+# Copying default .data.xml file
+sudo cp .data.xml /opt/py_finder/
+
+# Moving Desktop configuration file- py_finder.desktop and deleting local copy
+echo -e "Copying py_finder.desktop file to /usr/share/applications/  \nThis requires super-user privileges"
+sudo cp $CURRENT_PATH/dependencies/py_finder.desktop /usr/share/applications/
+status=$?
+if [ $status -eq 0 ];then
+	echo -e "Copied py_finder.desktop file successfully \n\n"
+else
+	echo "Aborting installation"
+	exit
+fi
+
+
+# Moving icon file- py_finder.svg
+echo -e "Copying py_finder icon to /usr/share/pixmaps/"
+sudo cp $CURRENT_PATH/graphics/py_finder.svg /usr/share/pixmaps/py_finder.svg
+status=$?
+
+if [ $status -eq 0 ];then
+	echo -e "Copied icon successfully \n\n"
+else
+	echo "Aborting installation"
+	exit
+fi
+
+echo -e "Installation finished successfully... \nPlease add this application to lxpanel from Application Launchbar under Accessibility"

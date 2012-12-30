@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Py Finder
+Comment=A light weight gtk application for searching applications and files
+Exec=/opt/py_finder/startup -n
+Icon=/usr/share/pixmaps/py_finder.svg
+Terminal=false
+Type=Application
+Categories=Application;Accessibility;
+StartupNotify=true

@@ -9,11 +9,11 @@
 	</apps>
 	
 	<files>
+		<gen>Icon.png</gen>
+		<gen>Run-App.zip</gen>
+		<gen>UI</gen>
+		<gen>game</gen>
 		<gen>back</gen>
-		<gen>nano</gen>
-		<gen>wall</gen>
-		<gen>test</gen>
-		<gen>screen</gen>
 	
 	</files>
 	
