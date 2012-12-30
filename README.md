@@ -49,8 +49,16 @@ Installation:
 	
     $ ./dep_uninstall
     
-	
+8. To remove app from lxpanel, right-click on Py Finder icon and click on "delete panel item"
+
+
 Bugs:
 -----
 
 Please report all bugs and errors here on github
+
+
+License:
+--------
+
+Released under GNU GPL(General Public Lience) V2 license.

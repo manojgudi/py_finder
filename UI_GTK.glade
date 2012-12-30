@@ -343,7 +343,7 @@ Built using:
 Please find documentation/file bug-reports at -
             &lt;a href="https://github.com/manojgudi/py_finder"&gt;Py_Finder@github&lt;/a&gt;
 
-Released under &lt;b&gt;___ License&lt;/b&gt;</property>
+Released under &lt;a href="http://www.gnu.org/licenses/gpl-2.0.txt"&gt;&lt;b&gt;GPL V2 License&lt;/b&gt;&lt;/a&gt;</property>
             <property name="use_markup">True</property>
           </object>
           <packing>

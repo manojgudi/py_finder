@@ -11,10 +11,9 @@ else
 echo Good man, you are root
 fi
 
-echo "Purging pygtk, pyglade and elementtree libs"
+echo "Purging pyglade and elementtree libs"
 
 apt-get purge python-glade2
-apt-get purge python-gtk2
 
 # Removing etree folder
 rm -rf /usr/lib/python2.7/xml/etree/
