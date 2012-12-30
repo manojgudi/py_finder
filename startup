@@ -1,3 +1,2 @@
 #!/bin/bash
-cd /home/USER_NAME/.py_finder
-python Py_Finder.py
+python /opt/py_finder/Py_Finder.py

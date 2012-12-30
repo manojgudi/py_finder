@@ -24,7 +24,7 @@ class front_end:
 		
 		# Set environment path
 		import os
-		path=os.getenv("HOME")+"/.py_finder/"
+		path="/opt/py_finder/"
 		os.chdir(path)
 		
 		#Set glade file

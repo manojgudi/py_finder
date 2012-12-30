@@ -1,44 +1,29 @@
 #!/bin/bash
 
 # Path variables
-USER=`whoami`
 CURRENT_PATH=`pwd`
 
-# Fixing path variable in startup file
-cp startup temp_startup
-filetowork=temp_startup
-sed -i "s/USER_NAME/$USER/g" $filetowork;
-
 #  Make .py_finder folder
-echo -e "making new directory /home/$USER/.py_finder"
-cd /home/$USER
-mkdir .py_finder
+echo -e "making new directory /opt/py_finder, needs user privileges \n"
+sudo mkdir /opt/py_finder/
 
 
 # Copying files to .py_finder folder
 echo -e "copying python files... \n"
 cd $CURRENT_PATH
-cp *.py /home/$USER/.py_finder/
-cp *.glade /home/$USER/.py_finder/
-cp -r graphics/ /home/$USER/.py_finder/
-cp temp_startup /home/$USER/.py_finder/startup
-rm temp_startup
-
-# Fixing Exec variable in py_finder.desktop and copying it locally
-cd $CURRENT_PATH
-cp dependencies/py_finder.desktop py_finder.desktop
-filetowork=py_finder.desktop
-sed -i "s/USER_NAME/$USER/g" $filetowork;
-
-
+sudo cp *.py /opt/py_finder/
+sudo cp *.glade /opt/py_finder/
+sudo cp -r graphics/ /opt/py_finder/
+sudo cp startup /opt/py_finder/startup
+# Copying default .data.xml file
+sudo cp .data.xml /opt/py_finder/
 
 # Moving Desktop configuration file- py_finder.desktop and deleting local copy
 echo -e "Copying py_finder.desktop file to /usr/share/applications/  \nThis requires super-user privileges"
-sudo cp $CURRENT_PATH/py_finder.desktop /usr/share/applications/
+sudo cp $CURRENT_PATH/dependencies/py_finder.desktop /usr/share/applications/
 status=$?
 if [ $status -eq 0 ];then
 	echo -e "Copied py_finder.desktop file successfully \n\n"
-	rm $CURRENT_PATH/py_finder.desktop
 else
 	echo "Aborting installation"
 	exit
