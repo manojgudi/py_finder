@@ -49,7 +49,7 @@ def app_search(keyword):
 	if output==[]:
 		# No such application found error
 		#error code 1
-		return 1
+		return 1,1
 	else:
 		# Write this keyword to .data.xml
 		recent_search_w(keyword,1)
