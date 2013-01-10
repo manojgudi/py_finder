@@ -3,7 +3,7 @@ import subprocess as sp
 import os
 
 def app_search(keyword):
-	""" This function is used to query dpkg and return single relevant answer; In: single string, Out: Error Number or string of relevant search """
+	""" This function is used to query dpkg and return single relevant answer; In: single string, Out: Error Number or list of relevant search results(output_name_list) """
 	# Check for blank keywords
 	if keyword=="":
 		print "blank keyword"
@@ -11,41 +11,72 @@ def app_search(keyword):
 		# error code 0		
 		return 0
 	
+	# Dynamic Array output
+	output = []			# contains path(.desktop file) of all relevent search result
+	output_name_list = []		# contains name of relevent search result
+	
+	
 	# Will run only if keyword is not null, case insensitive search
-	p1=sp.Popen(["dpkg" , "--get-selections"], stdout=sp.PIPE)
-	p2=sp.Popen(["awk", "{print $1}"], stdin=p1.stdout, stdout=sp.PIPE)
-	p3=sp.Popen(["grep","-i","-m","1", keyword], stdin=p2.stdout, stdout=sp.PIPE)
-	output=p3.communicate()[0]
-
-	# Kill earlier process pipes
+	path = "ls /usr/share/applications/*.desktop"
+	p1 = sp.Popen(path, shell=True, stdout=sp.PIPE)
+	list_of_files = p1.communicate()[0]
+	
+	# make it a list
+	list_of_files = str2list(list_of_files)	
+	
+	# Search .desktop files for keyword	
+	for i in list_of_files:
+		p1 = sp.Popen(["cat", i], stdout=sp.PIPE)
+		p2 = sp.Popen(["grep", "-i", keyword], stdin=p1.stdout, stdout=sp.PIPE)
+		result = p2.communicate()[0]
+		if result != "":
+			output.append(i)
+	
+	# Format output names
+	for i in output:
+		name_with_ext = i.rpartition("/")[2]
+		temp = name_with_ext.find(".desktop")
+		
+		# Saving Name without extension
+		output_name_list.append(name_with_ext[:temp])
+	
+	print output_name_list
+						
+		
+	# Kill earlier process pipe
 	p1.kill()
-	p2.kill()
 
-	if output=="":
-		# "No application by such name"
+	if output==[]:
+		# No such application found error
 		#error code 1
 		return 1
 	else:
-		#save this into .recent_searches file
-		# We are saving output instead of keyword, since keyword==>result is many to one mapping 
-		#recent_search_w(output)
-
-		# problem is output from app_search is list with a delimiter \n; so 'app_name' becomes 'app_name\n', hence we use below function that removes delimiter
-		delim_number=output.find("\n")
-		output=output[:delim_number]
-		
 		# Write this keyword to .data.xml
 		recent_search_w(keyword,1)
-		return output	
+		return output_name_list, output
 		
 
 
 # On Double clicking app from search, this should be called:
-def open_app(program_name):
+def open_app(program_file):
 	
+	print program_file
 	''' Function used to open app when tapping of relevant keyword; In: single string, Out: Success Number '''
 	try:
+		p1 = sp.Popen(["cat", program_file], stdout=sp.PIPE)
+		p2 = sp.Popen(["grep","-m", "1", "Exec"], stdin=p1.stdout, stdout=sp.PIPE)
+		program_name = p2.communicate()[0]
+		
+		# Remove processes
+		p1.kill()
+		p2.kill()
+		
+		# Removing "Exec=" and "\n" which is in program_name string
+		program_name=program_name.replace("Exec=","")
+		program_name=program_name.replace("\n","")
+
 		sp.Popen([str(program_name)])
+	
 		# success code 100
 		program_output=100
 	
@@ -302,3 +333,14 @@ def recent_search_w(result, mode):
 		files_output=update_list(files_output)
 		write(files_output, mode)	
 	print "written to xml"
+
+def str2list(str_var):
+	""" Function to convert long formatted string of delimited (/n) to a list; In: Long Formatted List Out: List of elements """
+	number_lines=str_var.count("\n")
+	list_var=[None]*(number_lines)
+	temp2=str_var
+	for i in range(number_lines):
+		temp=str(temp2.partition("\n")[0])
+		list_var[i]=temp
+		temp2=str(temp2.partition("\n")[2])
+	return list_var	
