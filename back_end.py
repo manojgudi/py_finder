@@ -67,16 +67,14 @@ def open_app(program_file):
 		p2 = sp.Popen(["grep","-m", "1", "Exec"], stdin=p1.stdout, stdout=sp.PIPE)
 		program_name = p2.communicate()[0]
 		
-		# Remove processes
-		p1.kill()
-		p2.kill()
-		
 		# Removing "Exec=" and "\n" which is in program_name string
 		program_name=program_name.replace("Exec=","")
 		program_name=program_name.replace("\n","")
-
-		sp.Popen([str(program_name)])
-	
+		
+		print program_name
+		
+		sp.Popen([str(program_name)], shell=True)
+			
 		# success code 100
 		program_output=100
 	
@@ -170,7 +168,7 @@ def open_path(path_full):
 
 		### REPLACE thunar with pcmanfm for lxde
 		p1=sp.Popen(["pcmanfm", path])
-
+		
 		# success code 101
 		return 101
 	except: 
