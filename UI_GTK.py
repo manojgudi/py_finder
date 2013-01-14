@@ -50,7 +50,9 @@ class front_end:
 		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate,
 		"on_file_searchbox_activate" : self.on_file_searchbox_activate,
 		"on_file_search_button_clicked" : self.on_file_searchbox_activate,
-		"on_notebook_switch_page" : self.on_notebook_focus_tab
+		"on_notebook_switch_page" : self.on_notebook_focus_tab,
+		"on_quit_button_clicked" : self.on_quit_button_clicked,
+		"on_quit_wo_onboard_clicked" : self.on_quit_wo_onboard_clicked
 		}
 		## End of dic
 		self.glade.connect_signals(self.dic)
@@ -75,14 +77,11 @@ class front_end:
 			I want my ram free of any infections after fucking with GTK....;)
 		"""                    
 		try:
-			print "Killing florence"
+			print "Killing florence and/or onboard"
 			sp.Popen(["pkill", "florence"])
+			sp.Popen(["pkill", "onboard"])
 		except:
-			try: 
-				print "Killing onboard"
-				sp.Popen("pkill", "onboard")
-			except:
-				print "cannot kill virtual keyboard instance since no such app started"			
+			print "cannot kill virtual keyboard instance since no such app started"			
 		gtk.main_quit()
                 
 	def main(self):		
@@ -98,7 +97,7 @@ class front_end:
 		
 		# Importing functions
 		from back_end import app_search as app_search
-		self.output=app_search(self.keyword)		
+		self.output, self.output_full_path = app_search(self.keyword)		
 
 		# Get frame
 		self.apps_result_frame = self.glade.get_object("apps_result_frame")				
@@ -127,7 +126,7 @@ class front_end:
 			self.apps_search_liststore = gtk.ListStore(str, gtk.gdk.Pixbuf)
 			
 			# Find icon 
-			self.icon="/usr/share/icons/hicolor/48x48/apps/"+self.output+".png"
+			self.icon="/usr/share/icons/hicolor/48x48/apps/"+self.output[0]+".png"
 			self.default_icon="graphics/default_apps.png"
 			
 			# Set pixbuf
@@ -138,7 +137,9 @@ class front_end:
 				self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.default_icon)
 			
 			# Append to model
-			self.apps_search_liststore.append([self.output,self.apps_search_pixbuf])
+			for i in self.output:
+				self.apps_search_liststore.append([i,self.apps_search_pixbuf])
+			
 			
 			# Make icon view
 			self.apps_search_iconview = gtk.IconView(self.apps_search_liststore)
@@ -146,14 +147,14 @@ class front_end:
 			# Icon view settings
 			self.apps_search_iconview.set_text_column(0)
 			self.apps_search_iconview.set_pixbuf_column(1)
-			self.apps_search_iconview.set_orientation(gtk.ORIENTATION_VERTICAL)
-			self.apps_search_iconview.set_selection_mode(gtk.SELECTION_SINGLE)
+			#self.apps_search_iconview.set_orientation(gtk.ORIENTATION_VERTICAL)
+			#self.apps_search_iconview.set_selection_mode(gtk.SELECTION_SINGLE)
 			
 			# connecter, when selection changed, call on_activate, and pass it apps_searchbox
-			self.apps_search_iconview.connect('selection_changed', self.on_activate, self.apps_searchbox)
+			self.apps_search_iconview.connect('selection_changed', self.on_activate, self.apps_searchbox, self.output_full_path)
 			
 			# iconview set columns
-			self.apps_search_iconview.set_columns(1)
+			self.apps_search_iconview.set_columns(2)
 			
 			# Add iconview to frame	
 			self.apps_result_frame.add(self.apps_search_iconview)
@@ -172,22 +173,32 @@ class front_end:
  		# Remove text from file_searchbox
  		searchbox.set_text("")
  		
-	def on_activate(self, widget, searchbox):
+	def on_activate(self, widget, searchbox, output_list):
 
 		print "item selected "
 		# Clear searchbox
 		searchbox.set_text("")
 		
-		#open app
-		from back_end import open_app as open_app
-		self.did_app_open=open_app(self.output)
-		if self.did_app_open == 1001:
-			self.ErrorMessage("Couldn't Open Application",searchbox)
-		else:
-			print "App opened successfully..."
+		# When nothing is selected
+		try:
+			self.item = self.apps_search_iconview.get_selected_items()[0][0]
+			
+			# self.output will be a path to desktop file like /usr/share/application/firefox.desktop
+			self.output=output_list[self.item]
+		except:
+			print "No item selected"
+			self.item = ""
+			
+		if self.item != "" :
+			# open app		
+			from back_end import open_app as open_app
+			self.did_app_open=open_app(self.output)
+			
+			if self.did_app_open == 1001:
+				self.ErrorMessage("Couldn't Open Application",searchbox)
+			else:
+				print "App opened successfully..."
       	
- 		# Remove text from file_searchbox
- 		searchbox.set_text("")
  		
  		
 	def on_file_searchbox_activate(self, widget):
@@ -200,8 +211,8 @@ class front_end:
 				
 		# Importing function
 		from back_end import search_file as search_file
-		
 		self.output_list = search_file(self.keyword_file)
+		
 
 		# get file_search_frame from glade
 		self.file_search_frame = self.glade.get_object("file_search_frame")
@@ -419,4 +430,13 @@ class front_end:
 		# get searchbox and set its text value to self.result/keyword
        		self.files_searchbox=self.glade.get_object("file_searchbox")
        		self.files_searchbox.set_text(self.result)				
+
+	def on_quit_button_clicked(self, widget):
+		### Quit whole application and onboard/florence instance
+		self.main_quit(widget)
+
+		
+	def on_quit_wo_onboard_clicked(self, widget):
+		### Quit Only instance
+		gtk.main_quit()
 
