@@ -50,7 +50,9 @@ class front_end:
 		"on_apps_search_button_clicked" : self.on_apps_searchbox_activate,
 		"on_file_searchbox_activate" : self.on_file_searchbox_activate,
 		"on_file_search_button_clicked" : self.on_file_searchbox_activate,
-		"on_notebook_switch_page" : self.on_notebook_focus_tab
+		"on_notebook_switch_page" : self.on_notebook_focus_tab,
+		"on_quit_button_clicked" : self.on_quit_button_clicked,
+		"on_quit_wo_onboard_clicked" : self.on_quit_wo_onboard_clicked
 		}
 		## End of dic
 		self.glade.connect_signals(self.dic)
@@ -431,4 +433,13 @@ class front_end:
 		# get searchbox and set its text value to self.result/keyword
        		self.files_searchbox=self.glade.get_object("file_searchbox")
        		self.files_searchbox.set_text(self.result)				
+
+	def on_quit_button_clicked(self, widget):
+		### Quit whole application and onboard/florence instance
+		self.main_quit(widget)
+
+		
+	def on_quit_wo_onboard_clicked(self, widget):
+		### Quit Only instance
+		gtk.main_quit()
 
