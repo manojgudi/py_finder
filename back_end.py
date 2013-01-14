@@ -67,9 +67,10 @@ def open_app(program_file):
 		p2 = sp.Popen(["grep","-m", "1", "Exec"], stdin=p1.stdout, stdout=sp.PIPE)
 		program_name = p2.communicate()[0]
 		
-		# Removing "Exec=" and "\n" which is in program_name string
+		# Removing "Exec="  "\n"  " %U"  strings which is in program_name string
 		program_name=program_name.replace("Exec=","")
 		program_name=program_name.replace("\n","")
+		program_name=program_name[:program_name.find(" ")]
 		
 		print program_name
 		

@@ -77,14 +77,11 @@ class front_end:
 			I want my ram free of any infections after fucking with GTK....;)
 		"""                    
 		try:
-			print "Killing florence"
+			print "Killing florence and/or onboard"
 			sp.Popen(["pkill", "florence"])
+			sp.Popen(["pkill", "onboard"])
 		except:
-			try: 
-				print "Killing onboard"
-				sp.Popen("pkill", "onboard")
-			except:
-				print "cannot kill virtual keyboard instance since no such app started"			
+			print "cannot kill virtual keyboard instance since no such app started"			
 		gtk.main_quit()
                 
 	def main(self):		
