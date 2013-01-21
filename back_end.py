@@ -73,7 +73,9 @@ def open_app(program_file):
 		# Removing "Exec="  "\n"  " %U"  strings which is in program_name string
 		program_name=program_name.replace("Exec=","")
 		program_name=program_name.replace("\n","")
-		program_name=program_name[:program_name.find(" ")]
+		
+		if program_name.find(" ")!= -1:
+			program_name=program_name[:program_name.find(" ")]
 		
 		print program_name
 		
