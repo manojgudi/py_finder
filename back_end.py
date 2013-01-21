@@ -13,9 +13,9 @@ def app_search(keyword):
 		return 0
 	
 	# Dynamic Array output
-	output = []			# contains path(.desktop file) of all relevent search result
-	output_name_list = []		# contains name of relevent search result
-	
+	output = []			# contains path(.desktop file) of all relevent search results
+	output_name_list = []		# contains name of relevent search results
+	icon_list = []  	# contains path of icons for relevent search results
 	
 	# Will run only if keyword is not null, search is indenpendent of case.
 	path = "ls /usr/share/applications/*.desktop"
@@ -43,6 +43,8 @@ def app_search(keyword):
 	
 	print output_name_list
 						
+	for App_Name in output_name_list :
+		icon_list.append(getIconPath (App_Name))
 		
 	# Kill earlier process pipe
 	p1.kill()
@@ -50,11 +52,11 @@ def app_search(keyword):
 	if output==[]:
 		# No such application found error
 		#error code 1
-		return 1,1
+		return 1,1,1
 	else:
 		# Write this keyword to .data.xml
 		recent_search_w(keyword,1)
-		return output_name_list, output
+		return output_name_list, output, icon_list
 		
 
 
@@ -345,7 +347,7 @@ def str2list(str_var):
 		temp2=str(temp2.partition("\n")[2])
 	return list_var	
 
-def getIconPath (filename) :
+def getIconPath (App_Name) :
 	''' This function is for searching the path of the icon listed in the .desktop File 
 		Input: filename
 		Output: Icon-Path.
@@ -357,11 +359,13 @@ def getIconPath (filename) :
 	# Get the icon path from the Icon Theme.
 	try :
 		# 1. Get Icons from the relative path.
-		Icon_Path = Icon_Theme.lookup_icon(filename , 48 , 0)
+		Icon_Path = Icon_Theme.lookup_icon(App_Name , 48 , 0)
+		#if(Icon_Path
+		Icon_Path = Icon_Path.get_filename()
 	except :
 		# To be implemented - Rite now it sends an error message and sends null string.
 		# 2. Get icons from absolute path. 
-		Icon_Path = ''
+		Icon_Path = 'NoIconFound'
 		print "Icon Not Found"
 		
 	return Icon_Path
