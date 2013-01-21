@@ -1,6 +1,7 @@
 
 import subprocess as sp
 import os
+import gtk
 
 def app_search(keyword):
 	""" This function is used to query dpkg and return single relevant answer; In: single string, Out: Error Number or list of relevant search results(output_name_list) """
@@ -16,7 +17,7 @@ def app_search(keyword):
 	output_name_list = []		# contains name of relevent search result
 	
 	
-	# Will run only if keyword is not null, case insensitive search
+	# Will run only if keyword is not null, search is indenpendent of case.
 	path = "ls /usr/share/applications/*.desktop"
 	p1 = sp.Popen(path, shell=True, stdout=sp.PIPE)
 	list_of_files = p1.communicate()[0]
@@ -343,3 +344,24 @@ def str2list(str_var):
 		list_var[i]=temp
 		temp2=str(temp2.partition("\n")[2])
 	return list_var	
+
+def getIconPath (filename) :
+	''' This function is for searching the path of the icon listed in the .desktop File 
+		Input: filename
+		Output: Icon-Path.
+	'''
+	# 1. Search Icons for Default icons - using relative path.
+	# 2. Search Icons for Other/Custom Icons - using absolute path in case there is some issue displaying the icon provided by GTK+ theme.
+	# Get the icon theme first.
+	Icon_Theme = gtk.icon_theme_get_default()
+	# Get the icon path from the Icon Theme.
+	try :
+		# 1. Get Icons from the relative path.
+		Icon_Path = Icon_Theme.lookup_icon(filename , 48 , 0)
+	except :
+		# To be implemented - Rite now it sends an error message and sends null string.
+		# 2. Get icons from absolute path. 
+		Icon_Path = ''
+		print "Icon Not Found"
+		
+	return Icon_Path
