@@ -3,3 +3,5 @@
 *.xml
 *.pyc
 2back*
+git-loc
+.gitignore

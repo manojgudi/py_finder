@@ -98,7 +98,7 @@ class front_end:
 		
 		# Importing functions
 		from back_end import app_search as app_search
-		self.output, self.output_full_path = app_search(self.keyword)		
+		self.output, self.output_full_path, self.output_icon = app_search(self.keyword)		
 
 		# Get frame
 		self.apps_result_frame = self.glade.get_object("apps_result_frame")				
@@ -125,22 +125,24 @@ class front_end:
 							
 			# make new liststore
 			self.apps_search_liststore = gtk.ListStore(str, gtk.gdk.Pixbuf)
-			
+		
 			# Find icon 
-			self.icon="/usr/share/icons/hicolor/48x48/apps/"+self.output[0]+".png"
+			#self.icon="/usr/share/icons/hicolor/48x48/apps/"+self.output[0]+".png"
 			self.default_icon="graphics/default_apps.png"
 			
-			# Set pixbuf
-			try:
-				self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.icon)
-			except:
-				# If icon not found, then use defaults
-				self.apps_search_pixbuf = gtk.gdk.pixbuf_new_from_file(self.default_icon)
+			# Set pixbuf - Set the Icon for the file and app search
+			self.apps_search_pixbuf = []
+			for i in self.output_icon :
+				if 'NoIconFound' in i :
+					self.apps_search_pixbuf.append( gtk.gdk.pixbuf_new_from_file(self.default_icon))
+				else :	
+					self.apps_search_pixbuf.append( gtk.gdk.pixbuf_new_from_file(i))
 			
 			# Append to model
-			for i in self.output:
-				self.apps_search_liststore.append([i,self.apps_search_pixbuf])
 			
+			for i in range(len(self.output)) :
+				self.apps_search_liststore.append([self.output[i],self.apps_search_pixbuf[i]])
+									
 			
 			# Make icon view
 			self.apps_search_iconview = gtk.IconView(self.apps_search_liststore)
