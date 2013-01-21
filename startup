@@ -1,2 +1,10 @@
 #!/bin/bash
-python /opt/py_finder/Py_Finder.py
+
+NO_OF_INSTANCE=`ps aux | grep Py_Finder | wc -l`;
+echo $NO_OF_INSTANCE
+if [ $NO_OF_INSTANCE -gt 1 ]; then
+	exit
+else
+	echo "Invoking app"
+	python /opt/py_finder/Py_Finder.py
+fi
