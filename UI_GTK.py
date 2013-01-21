@@ -90,6 +90,7 @@ class front_end:
 
 
         def on_apps_searchbox_activate(self,widget):
+			# When app_search_button is pressed ... this method is invoked.
        		print "apps_searchbox working"
        		self.apps_searchbox=self.glade.get_object("apps_searchbox")
        		self.keyword=self.apps_searchbox.get_text()
@@ -176,7 +177,7 @@ class front_end:
 	def on_activate(self, widget, searchbox, output_list):
 
 		print "item selected "
-		# Clear searchbox
+		# Clear text box - 'searchbox'
 		searchbox.set_text("")
 		
 		# When nothing is selected

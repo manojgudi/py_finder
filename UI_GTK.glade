@@ -455,7 +455,7 @@ Released under &lt;a href="http://www.gnu.org/licenses/gpl-2.0.txt"&gt;&lt;b&gt;
           <object class="GtkLabel" id="quit_fram">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Options</property>
+            <property name="label" translatable="yes">Exit</property>
           </object>
           <packing>
             <property name="position">4</property>
