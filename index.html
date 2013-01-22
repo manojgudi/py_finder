@@ -18,7 +18,7 @@
 
       <header>
         <h1>Py finder</h1>
-        <p>finder for lxde based DE optimized for touch</p>
+        <p>Application and Filesystem Search/Finder for lxde based DE optimized for touch</p>
       </header>
 
       <div id="banner">
@@ -39,36 +39,108 @@
         <ul></ul>
       </nav>
       <section>
-        <h3>Welcome to GitHub Pages.</h3>
+        <h2>Py Finder V1.0</h2>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This is small application designed to run on LXDE to search applications and files on local drive.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h3>Features:</h3>
 
-<h3>Designer Templates</h3>
+<p>
+    <ul type = "circle">
+	<li>    Its is touch optimized, specially meant for LXDE environment on Aakash devices. </li>
+	<li>    Integrated with screen keyboard  </li>
+	<li>    Light on RAM (takes up atmost 16mb with on-screen keyboard running) </li>
+	<li>    Low dependencies </li>
+    </ul>
+</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h3>Built Using:</h3>
 
-<h3>Rather Drive Stick?</h3>
+<p>
+    <ul type = "circle" >
+	<li> libgtk 2.24.8+ </li>
+	<li> PyGTK2.24  </li>
+	<li> Glade 3.8.0 </li>
+    </ul>
+</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<h3>Installation:</h3>
 
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>
+	<ol>
+		<p>
+			<li> It is assumed that the system has Python 2.7, Florence keyboard or Onscreen Keyboard. </li>
+		</p>
+		<p>
+			<li> To install dependencies, open terminal, <code>cd</code> to current directory, and then type :
+			<pre> <code> $ sudo ./dep_install </code> </pre>
+			 </li>
+		</p>
+		<p>
+			<li> To install application after installing dependencies, open a new terminal, <code>cd</code> to current directory and then type
+			<pre> <code> $ ./app_install </code> </pre>
+			</li>
+		</p>
+		<p>
+			<li>    After successful installation, We'll have to add it to lxpanel -
+				<ul>					
+						<li> Right Click lxpanel > Panel settings > Panel Applets </li>
+						<li> Click on Add > Application Launchbar > Add </li>
+						<li> Once, Application Launchbar is added, then Edit on Application Launchbar > Add Py Finder (which is under Universal Access) </li>
+				</ul>
+			</li>
+		</p>
+		<p>
+			<li>    That's it! Launch Py Finder by clicking on small icon in lxpanel   </li>
+		</p>
+		<p>
+			<li>    To uninstall application, open a new terminal, <code>cd</code> to current folder, and run uninstall scripts-
+				<pre> <code> $ ./app_uninstall </code> </pre>
+			</li>
+		</p>
+		<p>
+			<li>     To uninstall dependencies installed, open a new terminal, cd to current folder, and run uninstall scripts-
+				 <pre> <code> $ ./dep_uninstall </code></pre>
+			</li>
+		</p>
+		<p>
+			<li> To remove app from lxpanel, right-click on Py Finder icon and click on "delete panel item"	</li>
+		</p>
+	</ol>
+</p>
 
 <h3>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Need to Contact us ?
+	<table border = "0px" >
+		<tr>
+			<th> Manoj Gudi </th>
+			<td> xyz@gmail.com </td>
+		</tr>
+		<tr>
+			<th> Pranav Salunke </th>
+			<td> pps.pranav@gmail.com</td>
+		</tr>
+	</table>
+</p>
+
+<h3> Bugs: </h3>
+<p> Please report all bugs and errors <a href = "https://github.com/manojgudi/py_finder/issues?state=open" target="new_tab"> here </a> on github
+</p>
+
+<h3> License: </h3>
+<p>
+	Released under GNU GPL(General Public Lience) V2 license.
+	<br> For more details click <a href = "" >here </a>
+</p>
       </section>
       <footer>
-        <p>Project maintained by <a href="https://github.com/manojgudi">manojgudi</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+        <p>
+		Project maintained by <br>
+		<a href="https://github.com/manojgudi">manojgudi</a><br>
+		<a href="https://github.com/dguitarbite">dguitarbite</a>
+	</p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
